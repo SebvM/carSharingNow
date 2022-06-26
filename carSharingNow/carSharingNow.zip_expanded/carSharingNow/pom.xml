@@ -58,7 +58,7 @@
 
 	<build>
 		<plugins>
-		<plugin>
+			<plugin>
 				<groupId>org.codehaus.mojo</groupId>
 				<artifactId>exec-maven-plugin</artifactId>
 				<executions>
@@ -71,7 +71,7 @@
 				</executions>
 				<configuration>
 					<executable>ng</executable>
-					<workingDirectory>src/main/resources/frontend/fronten-angular-app</workingDirectory>
+					<workingDirectory>src/main/resources/frontend/frontend-angular-app</workingDirectory>
 					<arguments>
 						<argument>build</argument>
 					</arguments>
