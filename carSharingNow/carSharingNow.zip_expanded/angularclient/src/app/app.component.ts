@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'angularclient';
+  title = 'car Sharing Now';
+  users : any;
+
+  constructor(private http: HttpClient) {
+    http.get('/users/all').subscribe((data: {}) => this.users = data);
+  }
 }
