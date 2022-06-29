@@ -24,7 +24,8 @@ public class LoginView extends VerticalLayout implements BeforeEnterObserver {
 
 		add(new H1("CarSharingNow"), login);
 	}
-
+	
+	
 	@Override
 	public void beforeEnter(BeforeEnterEvent beforeEnterEvent) {
 		// inform the user about an authentication error
