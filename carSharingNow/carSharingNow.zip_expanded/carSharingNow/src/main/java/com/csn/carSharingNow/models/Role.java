@@ -2,8 +2,7 @@ package com.csn.carSharingNow.models;
 
 
 public enum Role {
-    USER("user"), 
-    ADMIN("admin");
+    USER("user"), ADMIN("admin");
 
     private String roleName;
 
