@@ -1,6 +1,5 @@
 package com.csn.carSharingNow.models;
 
-import java.util.Collection;
 import java.util.Date;
 import java.util.Set;
 
@@ -13,26 +12,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinColumns;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
-import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import com.csn.carSharingNow.security.SecurityConfiguration;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import lombok.Getter;
-import lombok.Setter;
 
 @Entity
 @Table(name = "user")
 public class User {
 	
+
 	@Transient
-	PasswordEncoder passwordEncoder;
+	PasswordEncoder passwordEncoder =  new BCryptPasswordEncoder();
 	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
@@ -53,18 +50,28 @@ public class User {
     		@JoinColumn(name="id", referencedColumnName="ID"),
             @JoinColumn(name="rolename", referencedColumnName="role") 
     		})
-    private Set<Role> roles;
+	public Set<Role> roles;
     
 	public User() {
 	}
-
+	public User(User user) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.firstname = user.getFirstname();
+        this.lastname = user.getLastname();
+        this.email = user.getEmail();
+        this.password =  passwordEncoder.encode(user.getPassword());
+        this.dateOfBirth = user.getDateOfBirth();
+        this.roles = user.getRoles();
+    }
+	
 	public User(String username, String email, String password, String firstname, String lastname, Date dateOfBirth, Set<Role> roles ) {
 		this.username = username;
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.dateOfBirth = dateOfBirth;
 		this.email = email;
-		this.password = passwordEncoder.encode(password).toString();
+		this.password = passwordEncoder.encode(password);
 		System.out.println("Klartext:" + password + "    Encoded:" + this.password );
 		this.roles = roles;
 	}
@@ -140,6 +147,7 @@ public class User {
 	public void setDateOfBirth(Date dateOfBirth) {
 		this.dateOfBirth = dateOfBirth;
 	}
+
 
 	    
 	    

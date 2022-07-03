@@ -1,9 +1,17 @@
 package com.csn.carSharingNow.views.forms;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.stream.Stream;
 
 import javax.annotation.security.PermitAll;
 
+import com.csn.carSharingNow.models.Role;
 import com.csn.carSharingNow.models.User;
 import com.vaadin.flow.component.ComponentEvent;
 import com.vaadin.flow.component.HasValueAndElement;
@@ -34,7 +42,8 @@ public class SignUpForm extends FormLayout  {
 	   private TextField username;
 	   private TextField firstname;
 	   private TextField lastname;
-	   private DatePicker  dateOfBirth ;
+	   private DatePicker dateOfBirth;
+	   
 
 	   private EmailField email;
 
@@ -47,7 +56,6 @@ public class SignUpForm extends FormLayout  {
 
 	   private Button submitButton;
 	   
-	   private User user;
 	   
 	   
 	   public SignUpForm() {	
@@ -69,12 +77,13 @@ public class SignUpForm extends FormLayout  {
 	       setRequiredIndicatorVisible( username, firstname, lastname, email, password,
 	               passwordConfirm, dateOfBirth);
 
-	       username.setErrorMessage("This field is required");
-	       firstname.setErrorMessage("This field is required");
-	       lastname.setErrorMessage("This field is required");
-	       email.setErrorMessage("This field is required");
-	       password.setErrorMessage("This field is required");
-	       passwordConfirm.setErrorMessage("This field is required");
+	       username.setErrorMessage("Es muss ein Benuztername angegeben werden.");
+	       firstname.setErrorMessage("Vorname ist notwendig");
+	       lastname.setErrorMessage("Nachname ist notwendig");
+	       email.setErrorMessage("Email ist notwendig");
+	       password.setErrorMessage("Ohne Passwort kannst du dich nicht einloggen");
+	       passwordConfirm.setErrorMessage("Bitte Password bestätigen");
+	       dateOfBirth.setErrorMessage("Ohne Geburtsdatum keine registrierung");	       
 	       
 	       errorMessageField = new Span();
 
@@ -82,7 +91,8 @@ public class SignUpForm extends FormLayout  {
 	       submitButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 	       
 	       dateOfBirth.setRequired(true);
-	       
+	       LocalDate defaultdate = LocalDate.of(1978, 11, 19);;
+	       dateOfBirth.setValue(defaultdate);
 	       add(title, username, firstname, lastname, dateOfBirth, email, password,
 	               passwordConfirm, adminRole, errorMessageField,
 	               submitButton);
@@ -100,6 +110,7 @@ public class SignUpForm extends FormLayout  {
 	       setColspan(email, 2);
 	       setColspan(errorMessageField, 2);
 	       setColspan(submitButton, 2);
+	       
 	   }   
 	   
 	   
@@ -111,16 +122,37 @@ public class SignUpForm extends FormLayout  {
 
 	   public Button getSubmitButton() { return submitButton; }
 	   	   
-	
+	   public TextField getUsernameField() { return username; }
+	   public TextField getFirstnameField() { return firstname; }
+	   public TextField getLastnameField() { return lastname; }
+	   public DatePicker getDateOfBirthField() { return dateOfBirth; }
+	   public EmailField getEmailField() { return email; }
+	   public Checkbox getAdminRole() { return adminRole; }
+
+
+
 	 
 	   private void setRequiredIndicatorVisible(HasValueAndElement<?, ?>... components) {
 	       Stream.of(components).forEach(comp -> comp.setRequiredIndicatorVisible(true));
 	   }
-	   
-	   
-	   //Events für das validieren der daten
-	  
+
+	   public Set<Role> userRoles(){
+		   Set<Role> roles = new HashSet<>();
+		   if(this.getAdminRole().isEnabled()) {
+			   roles.add(Role.ADMIN);
+		   }else {
+			   roles.add(Role.USER);
+		   }
+		   
+		   return roles;
+		  
+	   }
 		
+	   public Date getDatepickerDate() {
+		   Date selectedDate = null; 
+			selectedDate = Date.from(this.getDateOfBirthField().getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());	
+		   return selectedDate;
+	   }
 
 }
 
