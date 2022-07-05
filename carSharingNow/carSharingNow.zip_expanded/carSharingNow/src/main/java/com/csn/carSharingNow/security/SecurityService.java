@@ -10,6 +10,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Component;
 
+import com.csn.carSharingNow.models.User;
 import com.csn.carSharingNow.repositories.UserRepository;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.server.VaadinServletRequest;
@@ -29,7 +30,7 @@ public class SecurityService {
                 .filter(authentication -> !(authentication instanceof AnonymousAuthenticationToken));
     }
 
-    public Optional<Object> get() {
+    public Optional<User> get() {
         return getAuthentication().map(authentication -> userRepository.findByUsername(authentication.getName()));
     }
 
