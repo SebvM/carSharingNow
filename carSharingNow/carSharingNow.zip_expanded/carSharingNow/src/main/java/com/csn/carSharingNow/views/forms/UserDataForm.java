@@ -3,15 +3,11 @@ package com.csn.carSharingNow.views.forms;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.stream.Stream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.csn.carSharingNow.models.Role;
 import com.csn.carSharingNow.models.User;
-import com.csn.carSharingNow.repositories.UserRepository;
 import com.csn.carSharingNow.security.SecurityService;
 import com.csn.carSharingNow.security.UserDetailsServiceImpl;
 import com.vaadin.flow.component.HasValueAndElement;
@@ -25,6 +21,13 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
+
+/**
+ * Form um die Accountdaten zu ändern
+ * 
+ * @author Sebastian von Minden
+ *
+ */
 
 public class UserDataForm extends FormLayout  {
 	   private H3 title;
@@ -53,7 +56,7 @@ public class UserDataForm extends FormLayout  {
 		
 			User user = null;
 			try {
-				user = SecurityService.getAuthentication().map(authentication -> userDetails.loadUserByUsername(authentication.getName()));
+				//user = SecurityService.getAuthentication().map(authentication -> userDetails.loadUserByUsername(authentication.getName()));
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

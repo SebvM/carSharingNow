@@ -17,7 +17,12 @@ import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.html.H1;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
-
+/**
+ * Die View die das UserDataForm aufruft und die kontrolle und das speichern der Daten übernimmt
+ * 
+ * @author Sebastian von Minden
+ *
+ */
 
 @Route(value = "userData", layout=MainLayout.class)
 @PermitAll
@@ -30,7 +35,7 @@ public class UserDataView extends VerticalLayout {
 	@Autowired
 	SecurityService securityService;
 
-	private final UserDataForm dataForm = new UserDataForm(); 
+	private final UserDataForm dataForm = new UserDataForm(securityService); 
 	
 	public UserDataView() {
 		
