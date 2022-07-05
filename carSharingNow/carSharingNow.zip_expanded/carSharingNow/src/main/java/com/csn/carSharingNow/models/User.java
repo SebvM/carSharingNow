@@ -22,6 +22,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import com.csn.carSharingNow.security.SecurityConfiguration;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * User Object
+ * 
+ * @author Sebastian von Minden
+ *
+ */
 
 @Entity
 @Table(name = "user")

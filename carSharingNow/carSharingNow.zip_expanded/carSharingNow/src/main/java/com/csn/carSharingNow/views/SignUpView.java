@@ -1,7 +1,5 @@
 package com.csn.carSharingNow.views;
 
-import javax.annotation.security.PermitAll;
-
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.csn.carSharingNow.models.User;
@@ -16,6 +14,13 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
 import com.vaadin.flow.server.auth.AnonymousAllowed;
+
+/**
+ * Erzeugt die Registrierung als SignUpView
+ * 
+ * @author Sebastian von Minden
+ *
+ */
 
 @Route("signUp") 
 @AnonymousAllowed

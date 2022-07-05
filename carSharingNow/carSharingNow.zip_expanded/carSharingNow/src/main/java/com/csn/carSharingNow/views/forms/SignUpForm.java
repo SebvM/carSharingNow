@@ -22,6 +22,13 @@ import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.PageTitle;
 
+/**
+ * Einfache Form die den Aufbau der Registrierungsseite beschreibt und erzeugt
+ * 
+ * @author Sebastian von Minden
+ *
+ */
+
 
 @PageTitle("Registrieren | car Sharing Now")
 public class SignUpForm extends FormLayout  {

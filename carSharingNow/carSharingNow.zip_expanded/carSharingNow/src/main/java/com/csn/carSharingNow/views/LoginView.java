@@ -13,6 +13,14 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.StreamResource;
 
+/**
+ * Einfacher Login erzeugt mit der Vaadin eigenen LoginForm
+ * 
+ * @author Sebastian von Minden
+ *
+ */
+
+
 @Route("login") 
 @PageTitle("Login | car Sharing Now")
 public class LoginView extends VerticalLayout implements BeforeEnterObserver {

@@ -15,6 +15,15 @@ import com.csn.carSharingNow.repositories.UserRepository;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.server.VaadinServletRequest;
 
+
+/**
+ *  Componente die uns die authentication und den
+ *   angemeldeten nutzer wieder gibt sowie den logout verwaltet 
+ * 
+ * @author Sebastian von Minden
+ *
+ */
+
 @Component
 public class SecurityService {
 

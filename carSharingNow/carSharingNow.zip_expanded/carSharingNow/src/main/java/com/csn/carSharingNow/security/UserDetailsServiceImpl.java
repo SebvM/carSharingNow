@@ -1,6 +1,7 @@
 package com.csn.carSharingNow.security;
 
 import java.util.List;
+
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -12,6 +13,14 @@ import org.springframework.stereotype.Service;
 
 import com.csn.carSharingNow.models.User;
 import com.csn.carSharingNow.repositories.UserRepository;
+
+/**
+ * UserDetailsService wird implementiert um die 
+ * LoadUserByUsername funktion zu ersetzen
+ *  * 
+ * @author Sebastian von Minden
+ *
+ */
 
 @Service
 public class UserDetailsServiceImpl implements UserDetailsService {

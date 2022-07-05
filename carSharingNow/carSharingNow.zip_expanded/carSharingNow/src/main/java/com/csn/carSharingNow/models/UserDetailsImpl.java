@@ -10,6 +10,14 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+/**
+ * User Object welches die UserDetails der Spring Security 
+ * ersetzt damit wir diese in der DB speichern können
+ * 
+ * @author Sebastian von Minden
+ *
+ */
+
 public class UserDetailsImpl extends User implements UserDetails {
 
     public UserDetailsImpl(User user) {
