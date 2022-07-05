@@ -63,7 +63,9 @@ public class SecurityConfiguration
 
         setLoginView(http, LoginView.class); 
         
-        setStatelessAuthentication(http, new SecretKeySpec(Base64.getDecoder().decode(authSecret), JwsAlgorithms.HS256), "com.csn.carSharingNow");        
+        setStatelessAuthentication(http, new SecretKeySpec(Base64.getDecoder().decode(authSecret), JwsAlgorithms.HS256), "com.csn.carSharingNow");
+        
+        http.csrf().disable();
     }
 
 
@@ -76,7 +78,6 @@ public class SecurityConfiguration
 
         super.configure(web); 
     }
-
    
     
     @Autowired

@@ -33,7 +33,7 @@ public class SecurityService {
     @Autowired
     private UserRepository userRepository;
 
-    private Optional<Authentication> getAuthentication() {
+    public static Optional<Authentication> getAuthentication() {
         SecurityContext context = SecurityContextHolder.getContext();
         return Optional.ofNullable(context.getAuthentication())
                 .filter(authentication -> !(authentication instanceof AnonymousAuthenticationToken));
