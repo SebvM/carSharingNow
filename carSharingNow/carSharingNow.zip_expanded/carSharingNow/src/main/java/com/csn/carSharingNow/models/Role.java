@@ -1,7 +1,7 @@
 package com.csn.carSharingNow.models;
 
 /**
- * Rollen für die Authorit
+ * Rollen 
  * 
  * @author Sebastian von Minden
  *
