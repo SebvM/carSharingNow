@@ -78,7 +78,6 @@ public class SecurityConfiguration
 
         super.configure(web); 
     }
-
    
     
     @Autowired

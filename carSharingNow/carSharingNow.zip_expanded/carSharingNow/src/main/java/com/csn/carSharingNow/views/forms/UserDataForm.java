@@ -5,6 +5,8 @@ import java.time.ZoneId;
 import java.util.Date;
 import java.util.stream.Stream;
 
+import javax.annotation.PostConstruct;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.csn.carSharingNow.models.User;
@@ -49,19 +51,12 @@ public class UserDataForm extends FormLayout  {
 
 	   private Button submitButton;
 	   
-	   UserDetailsServiceImpl userDetails;
-	
-	   public UserDataForm(	@Autowired SecurityService securityService) {	
+	   @Autowired 
+	   SecurityService securityService;
+	   
+	   public UserDataForm(	) {	
+
 		 
-		
-			User user = null;
-			try {
-				//user = SecurityService.getAuthentication().map(authentication -> userDetails.loadUserByUsername(authentication.getName()));
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			   this.setUserData(user);
 		
 		   addClassName("signUp-form");
 	       title = new H3("Nutzerdaten anpassen");
@@ -81,7 +76,8 @@ public class UserDataForm extends FormLayout  {
 	       username.setEnabled(false);
 	       email.setEnabled(false);
 	       
-	       
+		   
+		   
 	       setRequiredIndicatorVisible( username, firstname, lastname, email, password,
 	               passwordConfirm, dateOfBirth);
 
@@ -119,8 +115,16 @@ public class UserDataForm extends FormLayout  {
 	       
 	       
 	       
-	   }   
+	   }
 	   
+	   @PostConstruct
+	   public void init() {
+
+	       User user = securityService.get().get();
+	       if(user != null)
+			   this.setUserData(user);
+	       
+	   }
 	   
 	   public PasswordField getPasswordField() { return password; }
 

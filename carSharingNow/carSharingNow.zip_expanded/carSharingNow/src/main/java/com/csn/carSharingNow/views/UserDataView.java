@@ -35,7 +35,7 @@ public class UserDataView extends VerticalLayout {
 	@Autowired
 	SecurityService securityService;
 
-	private final UserDataForm dataForm = new UserDataForm(securityService); 
+	private final UserDataForm dataForm = new UserDataForm(); 
 	
 	public UserDataView() {
 		
@@ -57,7 +57,7 @@ public class UserDataView extends VerticalLayout {
 		
 		dataForm.getSubmitButton().addClickListener(e -> updateUserData());
 
-		add(getContent());	
+		add(getContent());			
 	}
 	
 	private Component getContent() {
