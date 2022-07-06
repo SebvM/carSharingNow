@@ -15,15 +15,6 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 public class CarControllerTest {
 
-    @Autowired
-    private CarController carController = new CarController();
 
 
-    @ParameterizedTest
-    @CsvSource(value={"GustavHeinemannBuergerhaus60,VW,60.253,4","GustavHeinemannBuergerhaus60,BMW,30.253,4"})
-    public void returnContainsListWithTwoCars(String carStation, String carBrand, float mileage, int carSeats) throws Exception {
-        Car newCar = new Car(carStation,carBrand,mileage,carSeats);
-        carController.newCar(newCar);
-        List<Car> carList =carController.getAllCars();
-    }
 }

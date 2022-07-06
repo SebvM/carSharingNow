@@ -25,22 +25,7 @@ public class CarController {
         List<Car> carList = carRepository.findAll();
         return carList;
     }
-    public Car getCarById(int id){
-        return carRepository.findCarById(id);
-    }
-    public List getCarsBySeats(int seats){
-        List<Car> carList = carRepository.findCarBySeats(seats);
-        return carList;
-    }
 
-    public List getCarsByCityAndStreet(String city, String street){
-        List<Car> carList = carRepository.findCarsByCityAndStreet(city,street);
-        return carList;
-    }
-    public List getCarsByStreet(String street){
-        List<Car> carList = carRepository.findCarByStreet(street);
-        return carList;
-    }
 
     public List getCarsByCarStationEnum(String CarStationEnum){
         List<Car> carList = carRepository.findCarByCarStationEnum(CarStationEnum);

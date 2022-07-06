@@ -6,10 +6,6 @@ import com.csn.carSharingNow.models.Reservation;
 import com.csn.carSharingNow.repositories.CarRepository;
 import com.csn.carSharingNow.repositories.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.util.Assert;
 
 
 import java.util.ArrayList;
@@ -38,11 +34,11 @@ public class ReservationController {
     }
 
     public void cancelReservation(int id) {
-        reservationRepository.removeByReservationID(id);
+        reservationRepository.removeById(id);
     }
 
     public Reservation findReservationById(int id) {
-        return reservationRepository.findByReservationID(id);
+        return reservationRepository.findById(id);
     }
 
     public List getAvailableCars(Date reservationStart, Date reservationEnd) {
