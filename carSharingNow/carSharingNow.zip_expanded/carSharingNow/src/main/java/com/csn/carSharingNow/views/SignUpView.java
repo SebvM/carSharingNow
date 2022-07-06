@@ -37,6 +37,7 @@ public class SignUpView extends VerticalLayout {
 			    () -> getClass().getResourceAsStream("/images/cSn-Logo-removebg-preview.png"));
 
 		Image logoImage = new Image(imageResource, "carSharing Now");
+		
 		H1 header = new H1(logoImage);
 		addClassName("signUp-view");
 		setSizeUndefined(); 
@@ -67,7 +68,6 @@ public class SignUpView extends VerticalLayout {
 
 		if(requestedUserRegistration != null) {
 			userRepository.save(requestedUserRegistration);
-			System.out.println(requestedUserRegistration.toString());
 			signUp.getUI().ifPresent(ui -> ui.navigate("login"));
 		} 
 	}
