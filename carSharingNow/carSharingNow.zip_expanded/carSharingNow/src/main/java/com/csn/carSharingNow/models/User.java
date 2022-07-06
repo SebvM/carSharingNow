@@ -79,7 +79,6 @@ public class User {
 		this.dateOfBirth = dateOfBirth;
 		this.email = email;
 		this.password = passwordEncoder.encode(password);
-		System.out.println("Klartext:" + password + "    Encoded:" + this.password );
 		this.roles = roles;
 	}
 	

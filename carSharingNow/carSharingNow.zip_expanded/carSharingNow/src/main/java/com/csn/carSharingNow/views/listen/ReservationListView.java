@@ -3,6 +3,7 @@ package com.csn.carSharingNow.views.listen;
 import javax.annotation.security.PermitAll;
 
 import com.csn.carSharingNow.models.Reservation;
+import com.csn.carSharingNow.views.MainLayout;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -12,8 +13,15 @@ import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.theme.Theme;
+/**
+ * View die eine Liste in einem Grid anzeigt 
+ * und ein Eigabefeld für neue elemente für die Liste
+ * 
+ * @author Sebastian von Minden
+ *
+ */
 
-@Route("")
+@Route(value = "myReservations", layout=MainLayout.class)
 @PermitAll
 @PageTitle("Reservierungen | car Sharing Now")
 public class ReservationListView extends VerticalLayout { 
@@ -31,8 +39,8 @@ public class ReservationListView extends VerticalLayout {
     private void configureGrid() {
         grid.addClassNames("reservation-grid");
         grid.setSizeFull();
-        grid.setColumns("Fahrzeug", "Startdatum", "Enddatum");       
-        grid.getColumns().forEach(col -> col.setAutoWidth(true)); 
+        //grid.setColumns("Fahrzeug", "Startdatum", "Enddatum");       
+       // grid.getColumns().forEach(col -> col.setAutoWidth(true)); 
     }
 
     private HorizontalLayout getToolbar() {

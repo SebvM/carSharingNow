@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.csn.carSharingNow.repositories.UserRepository;
 import com.csn.carSharingNow.security.SecurityService;
+import com.csn.carSharingNow.views.listen.ReservationListView;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
@@ -67,9 +68,12 @@ public class MainLayout extends AppLayout {
 	    		//Benutzer Account Menüpunkt
 	    		RouterLink accountDataLink = new RouterLink(username, UserDataView.class); 
 	    		accountDataLink.setHighlightCondition(HighlightConditions.sameLocation()); 
+	    		RouterLink reservationDataLink = new RouterLink("Meine Reservierungen", ReservationListView.class); 
+	    		accountDataLink.setHighlightCondition(HighlightConditions.sameLocation()); 
 
 	    		addToDrawer(new VerticalLayout( 
-	    				accountDataLink
+	    				accountDataLink,
+	    				reservationDataLink
 	    				));
 	    	}
 	    }
