@@ -17,9 +17,7 @@ public class Car {
     private float mileage;
     private int carSeats;
 
-  /* @ManyToOne(fetch = FetchType.LAZY)
-   @JoinColumn(name = "carsOfCarSattion")
-    private CarStation carStation;*/
+
     private CarStationEnum carStationEnum;
 
 

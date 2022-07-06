@@ -21,6 +21,4 @@ public enum CarStationEnum {
         this.houseNumber = houseNumber;
 
     }
-
-
 }
