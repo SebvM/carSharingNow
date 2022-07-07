@@ -1,5 +1,6 @@
 package com.csn.carSharingNow.views.forms;
 
+import com.csn.carSharingNow.models.Car;
 import com.csn.carSharingNow.models.Reservation;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -8,26 +9,27 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
-import com.vaadin.flow.component.textfield.EmailField;
-import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.AfterNavigationEvent;
+import com.vaadin.flow.router.AfterNavigationObserver;
 
 import java.util.List;
 
-public class ReservationForm extends FormLayout {   
+public class ReservationForm extends FormLayout  implements AfterNavigationObserver {   
 	
-  DateTimePicker startTime = new DateTimePicker();
-  DateTimePicker endTime = new DateTimePicker();
+  DateTimePicker startTime = new DateTimePicker("Start der Reservierung");
+  DateTimePicker endTime = new DateTimePicker("Ende der Reservierung");
   
-  Button save = new Button("Save");
-  Button delete = new Button("Delete");
-  Button close = new Button("Cancel");
+  ComboBox<Car> car = new ComboBox<Car>();
+  
+  Button save = new Button("Speichern");
+  Button delete = new Button("Löschen");
+  Button close = new Button("Zurück");
 
-  public ReservationForm(List<Reservation> reservations) {
-    addClassName("contact-form"); 
-
-
+  public ReservationForm(Reservation reservations) {
+    addClassName("rerservation-form"); 
     add(startTime, 
     	endTime,
+    	car,
         createButtonsLayout());
   }
 
@@ -41,4 +43,11 @@ public class ReservationForm extends FormLayout {
 
     return new HorizontalLayout(save, delete, close); 
   }
+
+@Override
+public void afterNavigation(AfterNavigationEvent event) {
+	// TODO Auto-generated method stub
+	
+}
+  
 }

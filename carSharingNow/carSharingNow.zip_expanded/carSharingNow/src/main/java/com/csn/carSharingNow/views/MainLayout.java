@@ -15,6 +15,7 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.HighlightConditions;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouteParameters;
 import com.vaadin.flow.router.RouterLink;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
 
@@ -66,7 +67,7 @@ public class MainLayout extends AppLayout {
 	    	if (securityService.get().isPresent()) {	    		
 	    		username = securityService.get().get().getUsername();
 	    		//Benutzer Account Menüpunkt
-	    		RouterLink accountDataLink = new RouterLink(username, UserDataView.class); 
+	    		RouterLink accountDataLink = new RouterLink(username, UserDataView.class ); 
 	    		accountDataLink.setHighlightCondition(HighlightConditions.sameLocation()); 
 	    		RouterLink reservationDataLink = new RouterLink("Meine Reservierungen", ReservationListView.class); 
 	    		accountDataLink.setHighlightCondition(HighlightConditions.sameLocation()); 

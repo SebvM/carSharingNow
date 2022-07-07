@@ -19,6 +19,5 @@ public enum CarStationEnum {
         this.city = city;
         this.street = street;
         this.houseNumber = houseNumber;
-
     }
 }
