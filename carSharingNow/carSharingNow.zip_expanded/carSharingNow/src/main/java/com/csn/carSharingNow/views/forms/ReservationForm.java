@@ -2,6 +2,8 @@ package com.csn.carSharingNow.views.forms;
 
 import com.csn.carSharingNow.models.Car;
 import com.csn.carSharingNow.models.Reservation;
+import com.csn.carSharingNow.repositories.CarRepository;
+import com.csn.carSharingNow.repositories.ReservationRepository;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -12,19 +14,35 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 
-import java.util.List;
+import lombok.Getter;
+import lombok.Setter;
 
-public class ReservationForm extends FormLayout {   
+import java.time.ZoneId;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+@Getter @Setter
+public class ReservationForm extends FormLayout implements AfterNavigationObserver{   
 	
   DateTimePicker startTime = new DateTimePicker("Start der Reservierung");
   DateTimePicker endTime = new DateTimePicker("Ende der Reservierung");
   
   ComboBox<Car> car = new ComboBox<Car>();
-  
+  List<Car> carList = new ArrayList<Car>();
   Button delete = new Button("Löschen");
-  Button close = new Button("Zurück");
-
-  public ReservationForm(Reservation reservation) {
+  Button close = new Button("Zurück"); 
+  Reservation selectedReservation;
+  @Autowired
+  CarRepository carRepository;
+  @Autowired
+  ReservationRepository reservationRepository;
+  
+  public ReservationForm(Reservation selectedReservation) {
+	this.selectedReservation = selectedReservation;  
     addClassName("rerservation-form"); 
     startTime.setReadOnly(true);
     endTime.setReadOnly(true);
@@ -33,7 +51,7 @@ public class ReservationForm extends FormLayout {
     add(startTime, 
     	endTime,
     	car,
-        createButtonsLayout());
+        createButtonsLayout());    
   }
 
   private HorizontalLayout createButtonsLayout() {
@@ -41,10 +59,34 @@ public class ReservationForm extends FormLayout {
     close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
     close.addClickShortcut(Key.ESCAPE);
-
     return new HorizontalLayout(delete, close); 
   }
+  
+  DateTimePicker getstartTime() {
+	return startTime;
+  }  
+  public void setstartTime(Date startTime) {
+	this.startTime.setValue(startTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+  }
+  DateTimePicker getendTime() {
+	return endTime;
+  }
+  public void setendTime(Date endTime) {
+	this.endTime.setValue(endTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
+  }
+  ComboBox<Car> getcarList(){
+	return car;	  
+  }  
+  public void setcarList(List<Car> carList){
+	this.car.setItems(carList);  
+  }
 
-
+@Override
+public void afterNavigation(AfterNavigationEvent event) {
+	close.addClickListener(e -> this.setVisible(false));
+    delete.addClickListener(e ->  reservationRepository.delete(selectedReservation));	
+}
+  
+  
   
 }

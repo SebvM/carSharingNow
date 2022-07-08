@@ -37,7 +37,7 @@ public class ReservationController {
         for (Optional<Reservation> reservierung : reservationList) {
 			if (reservierung.isPresent()) {
 				if(reservierung.get().getCarName().isBlank() || reservierung.get().getCarName().isEmpty()) {
-					reservierung.get().setcarName(carRepository.findById(reservierung.get().getCarID()).get().getName());
+					reservierung.get().setCarName(carRepository.findById(reservierung.get().getCarID()).get().getName());
 				}
 
 
@@ -50,7 +50,7 @@ public class ReservationController {
     
     public void addReservation(int carID, long userID, Date reservationStart, Date reservationEnd) {
         Reservation newReservation = new Reservation(carID, userID, reservationStart, reservationEnd);
-        newReservation.setcarName(carRepository.findById(carID).get().getName());
+        newReservation.setCarName(carRepository.findById(carID).get().getName());
         reservationRepository.save(newReservation);
     }
 
@@ -64,15 +64,19 @@ public class ReservationController {
 
     public List<Car> getAvailableCars(Date reservationStart, Date reservationEnd) {
 
-        List<Car> availableCarList = new ArrayList<>();
+        List<Car> unavailableCarList = new ArrayList<>();
+        List<Car> availableCarList = carRepository.findAll();
         List<Reservation> allReservationsList = reservationRepository.findAll();
 
         for (Reservation reservation : allReservationsList) {
             if ((reservationStart.after(reservation.getReservationEnd()))
                     && reservationEnd.before(reservationStart)) {
-                availableCarList.add(carRepository.findCarById(reservation.getCarID()));
+            	unavailableCarList.add(carRepository.findCarById(reservation.getCarID()));
             }
         }
+        
+        availableCarList.removeAll(unavailableCarList);
+        
         return availableCarList;
     }
 

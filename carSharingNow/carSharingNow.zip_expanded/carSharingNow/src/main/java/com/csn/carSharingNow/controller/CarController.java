@@ -27,9 +27,14 @@ public class CarController {
         return carList;
     }
 
-
+    public Car getCarByID(int Id) {
+        Car car = carRepository.findCarById(Id);
+        return car;
+    }
+    
     public List getCarsByCarStationEnum(String CarStationEnum){
         List<Car> carList = carRepository.findCarByCarStationEnum(CarStationEnum);
         return carList;
     }
+
 }

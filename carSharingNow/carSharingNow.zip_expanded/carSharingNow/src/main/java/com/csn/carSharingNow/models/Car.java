@@ -35,8 +35,7 @@ public class Car {
 
     @Override
     public String toString() {
-        return "Car{" + "id=" + this.id + '\'' + ", carStation='" + this.carStationEnum.getCity() +" " + this.carStationEnum.getStreet() + " " + this.carStationEnum.getHouseNumber() + '\'' + ", carBrand='" + this.carBrand + '\'' + ", mileage='"
-                + this.mileage + '\'' + ", carSeats='" + this.carSeats + '\'' + '}';
+        return this.name ;
     }
 
 }
