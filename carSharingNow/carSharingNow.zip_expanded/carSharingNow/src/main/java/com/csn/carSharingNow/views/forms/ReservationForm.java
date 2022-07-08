@@ -14,19 +14,22 @@ import com.vaadin.flow.router.AfterNavigationObserver;
 
 import java.util.List;
 
-public class ReservationForm extends FormLayout  implements AfterNavigationObserver {   
+public class ReservationForm extends FormLayout {   
 	
   DateTimePicker startTime = new DateTimePicker("Start der Reservierung");
   DateTimePicker endTime = new DateTimePicker("Ende der Reservierung");
   
   ComboBox<Car> car = new ComboBox<Car>();
   
-  Button save = new Button("Speichern");
   Button delete = new Button("Löschen");
   Button close = new Button("Zurück");
 
-  public ReservationForm(Reservation reservations) {
+  public ReservationForm(Reservation reservation) {
     addClassName("rerservation-form"); 
+    startTime.setReadOnly(true);
+    endTime.setReadOnly(true);
+    car.setReadOnly(true);
+    
     add(startTime, 
     	endTime,
     	car,
@@ -34,20 +37,14 @@ public class ReservationForm extends FormLayout  implements AfterNavigationObser
   }
 
   private HorizontalLayout createButtonsLayout() {
-    save.addThemeVariants(ButtonVariant.LUMO_PRIMARY); 
     delete.addThemeVariants(ButtonVariant.LUMO_ERROR);
     close.addThemeVariants(ButtonVariant.LUMO_TERTIARY);
 
-    save.addClickShortcut(Key.ENTER); 
     close.addClickShortcut(Key.ESCAPE);
 
-    return new HorizontalLayout(save, delete, close); 
+    return new HorizontalLayout(delete, close); 
   }
 
-@Override
-public void afterNavigation(AfterNavigationEvent event) {
-	// TODO Auto-generated method stub
-	
-}
+
   
 }
