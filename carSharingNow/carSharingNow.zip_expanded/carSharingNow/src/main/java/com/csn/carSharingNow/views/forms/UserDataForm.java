@@ -8,7 +8,9 @@ import java.util.stream.Stream;
 import javax.annotation.PostConstruct;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
+import com.csn.carSharingNow.controller.UserController;
 import com.csn.carSharingNow.models.User;
 import com.csn.carSharingNow.security.SecurityService;
 import com.csn.carSharingNow.security.UserDetailsServiceImpl;
@@ -23,6 +25,10 @@ import com.vaadin.flow.component.html.Span;
 import com.vaadin.flow.component.textfield.EmailField;
 import com.vaadin.flow.component.textfield.PasswordField;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.router.AfterNavigationEvent;
+import com.vaadin.flow.router.AfterNavigationObserver;
+import com.vaadin.flow.router.BeforeEnterEvent;
+import com.vaadin.flow.router.BeforeEnterObserver;
 
 /**
  * Form um die Accountdaten zu ändern
@@ -30,7 +36,6 @@ import com.vaadin.flow.component.textfield.TextField;
  * @author Sebastian von Minden
  *
  */
-
 public class UserDataForm extends FormLayout  {
 	   private H3 title;
 	   
@@ -53,6 +58,8 @@ public class UserDataForm extends FormLayout  {
 	   
 	   @Autowired 
 	   SecurityService securityService;
+	   @Autowired 
+	   UserController userController;
 	   
 	   public UserDataForm(	) {	
 
@@ -154,7 +161,7 @@ public class UserDataForm extends FormLayout  {
 	       Stream.of(components).forEach(comp -> comp.setRequiredIndicatorVisible(true));
 	   }
 
-	   private void setUserData(User user) {
+	   public void setUserData(User user) {
 			if(user != null) {
 				System.out.println(user.toString());
 				this.setUsernameField( user.getUsername()); 
@@ -170,5 +177,7 @@ public class UserDataForm extends FormLayout  {
 			selectedDate = Date.from(this.getDateOfBirthField().getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());	
 		   return selectedDate;
 	   }
+
+
 
 }
