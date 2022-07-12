@@ -20,29 +20,42 @@ public class Reservation {
 	
 	
     public Reservation(){
-
     }
-    public Reservation(int carID, long userID, Date reservationStart, Date reservationEnd){
-        this.carID = carID;
-        this.userID = userID;
+    
+    public Reservation(Car car, User user, Date reservationStart, Date reservationEnd){
+        this.car = car;
+        this.user = user;
         this.reservationStart = reservationStart;
         this.reservationEnd = reservationEnd;
     }
+    
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private int id;
+    
     private boolean canceled=false;
-    private int carID;
-    private String carName;
-    private long userID;
+    
+    @ManyToOne
+    @JoinColumn(name = "user_ID")
+    private User user;    
+    
+    @ManyToOne
+    @JoinColumn(name = "car_ID")
+    private Car car;
     private Date reservationStart;
     private Date reservationEnd;
-
     
+    @Transient
+    private String carName;    
+
+
+   	public String getcarName() {
+   		return car.getName();
+   	}
 	@Override
 	public String toString() {
 	  return "Reservation{" + "id=" + this.id + ", canceled='" + this.canceled + '\'' + ", carID='" 
-			  + this.carID + '\'' + ", userID='" + this.userID + '\'' + ", reservationStart='" + this.reservationStart +'\'' + ", reservationEnd='" + this.reservationEnd + '\'' + '}';
+			  + this.car.getId() + '\'' + ", userID='" + this.user.getId() + '\'' + ", reservationStart='" + this.reservationStart +'\'' + ", reservationEnd='" + this.reservationEnd + '\'' + '}';
 	}
 
 }

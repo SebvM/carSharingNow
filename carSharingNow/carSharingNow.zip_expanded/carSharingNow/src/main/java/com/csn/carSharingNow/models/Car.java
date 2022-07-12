@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 public class Car {
+	
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
     private int id;

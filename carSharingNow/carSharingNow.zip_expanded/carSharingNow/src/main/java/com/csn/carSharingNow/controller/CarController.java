@@ -22,7 +22,7 @@ public class CarController {
     }
 
 
-    public List getAllCars() {
+    public List<Car> getAllCars() {
         List<Car> carList = carRepository.findAll();
         return carList;
     }
@@ -32,7 +32,7 @@ public class CarController {
         return car;
     }
     
-    public List getCarsByCarStationEnum(String CarStationEnum){
+    public List<Car> getCarsByCarStationEnum(String CarStationEnum){
         List<Car> carList = carRepository.findCarByCarStationEnum(CarStationEnum);
         return carList;
     }

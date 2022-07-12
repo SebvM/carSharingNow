@@ -3,6 +3,7 @@ package com.csn.carSharingNow.controller;
 
 import com.csn.carSharingNow.models.Car;
 import com.csn.carSharingNow.models.Reservation;
+import com.csn.carSharingNow.models.User;
 import com.csn.carSharingNow.repositories.CarRepository;
 import com.csn.carSharingNow.repositories.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,22 +26,17 @@ public class ReservationController {
 
     }
 
-    public List getAllReservations() {
+    public List<Reservation>  getAllReservations() {
         List<Reservation> reservationList = reservationRepository.findAll();
         return reservationList;
     }
     
-    public List getAllReservationsForUser(long id) {
-        List<Optional<Reservation>> reservationList = reservationRepository.findByUserID(id); 
+    public List<Reservation>  getAllReservationsForUser(long id) {
+        List<Optional<Reservation>> reservationList = reservationRepository.findByuser_id(id); 
         List<Reservation> myReservationList = new ArrayList<>();
         
         for (Optional<Reservation> reservierung : reservationList) {
-			if (reservierung.isPresent()) {
-				if(reservierung.get().getCarName().isBlank() || reservierung.get().getCarName().isEmpty()) {
-					reservierung.get().setCarName(carRepository.findById(reservierung.get().getCarID()).get().getName());
-				}
-
-
+			if (reservierung.isPresent()) {			
 				myReservationList.add(reservierung.get());
 			}
 		}
@@ -48,9 +44,8 @@ public class ReservationController {
         return myReservationList;
     }
     
-    public void addReservation(int carID, long userID, Date reservationStart, Date reservationEnd) {
-        Reservation newReservation = new Reservation(carID, userID, reservationStart, reservationEnd);
-        newReservation.setCarName(carRepository.findById(carID).get().getName());
+    public void addReservation(Car car, User  user, Date reservationStart, Date reservationEnd) {
+        Reservation newReservation = new Reservation(car, user, reservationStart, reservationEnd);       
         reservationRepository.save(newReservation);
     }
 
@@ -71,7 +66,7 @@ public class ReservationController {
         for (Reservation reservation : allReservationsList) {
             if ((reservationStart.after(reservation.getReservationEnd()))
                     && reservationEnd.before(reservationStart)) {
-            	unavailableCarList.add(carRepository.findCarById(reservation.getCarID()));
+            	unavailableCarList.add(reservation.getCar());
             }
         }
         

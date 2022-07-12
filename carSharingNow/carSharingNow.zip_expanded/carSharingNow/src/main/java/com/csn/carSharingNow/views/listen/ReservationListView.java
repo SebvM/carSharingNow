@@ -38,6 +38,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
  *
  */
 
+@SuppressWarnings("serial")
 @Route(value = "myReservations", layout=MainLayout.class)
 @PermitAll
 @PageTitle("Reservierungen | car Sharing Now")
@@ -100,7 +101,6 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
         return toolbar;
     }
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void afterNavigation(AfterNavigationEvent event) {
 		gridUpdate();
@@ -111,7 +111,6 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 		addReservationButton.addClickListener(e -> addReservationButtonClicked());
 	}	
 	
-	@SuppressWarnings("unchecked")
 	private void gridUpdate() {
 		grid.setItems(reservationController.getAllReservationsForUser(securityService.get().get().getId()));	
 	}
@@ -120,9 +119,7 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 		resForm.setSelectedReservation(selectedReservation);
 		resForm.setVisible(true);
 		List<Car> carlist = new ArrayList<Car>();
-		Car car = null;
-		if(carController != null)
-			car = carController.getCarByID(selectedReservation.getCarID());
+		Car car = selectedReservation.getCar();
 		carlist.add(car); 
 		resForm.setcarList(carlist);
 		resForm.setstartTime(selectedReservation.getReservationStart());
@@ -162,7 +159,8 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 	private void addReservationButtonClicked() {
 		Date startDate = Date.from(startTime.getValue().atZone(ZoneId.systemDefault()).toInstant());
 		Date endDate = Date.from(endTime.getValue().atZone(ZoneId.systemDefault()).toInstant());
-		reservationController.addReservation(carCombo.getValue().getId(), securityService.get().get().getId(), startDate, endDate);		
+		Car selectedCar = carCombo.getValue();		
+		reservationController.addReservation(selectedCar, securityService.get().get(), startDate, endDate);		
 		availableCars = new ArrayList<Car>();
 		carCombo.setItems(availableCars);
 		carCombo.setReadOnly(true);

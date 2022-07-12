@@ -163,7 +163,6 @@ public class UserDataForm extends FormLayout  {
 
 	   public void setUserData(User user) {
 			if(user != null) {
-				System.out.println(user.toString());
 				this.setUsernameField( user.getUsername()); 
 				this.setFirstnameField( user.getFirstname()); 
 				this.setLastnameField(user.getLastname() ); 
