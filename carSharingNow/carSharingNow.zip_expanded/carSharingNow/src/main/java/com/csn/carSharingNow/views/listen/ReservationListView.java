@@ -43,11 +43,11 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 @PermitAll
 @PageTitle("Reservierungen | car Sharing Now")
 public class ReservationListView extends VerticalLayout implements AfterNavigationObserver { 
-	@Autowired
-	CarController carController;
+	
 	@Autowired
 	SecurityService securityService;
 	ReservationController reservationController;
+	CarController carController;
     Grid<Reservation> grid = new Grid<>(Reservation.class); 
     DateTimePicker startTime = new DateTimePicker("Start der Reservierung");
     DateTimePicker endTime = new DateTimePicker("Ende der Reservierung");     
@@ -58,8 +58,9 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
     List<Car> availableCars = new ArrayList<Car>();
     
     @Autowired
-    public ReservationListView(ReservationController reservationController) {
+    public ReservationListView(ReservationController reservationController, CarController carController) {
     	this.reservationController = reservationController;
+    	this.carController = carController;
         addClassName("reservation-list-view");
         setSizeFull();
         configureGrid(); 
