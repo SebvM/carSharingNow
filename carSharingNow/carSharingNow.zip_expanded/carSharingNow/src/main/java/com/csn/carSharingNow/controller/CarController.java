@@ -27,7 +27,7 @@ public class CarController {
         return carList;
     }
 
-    public Car getCarByID(Long Id) {
+    public Car getCarByID(int Id) {
         Car car = carRepository.findCarById(Id);
         return car;
     }

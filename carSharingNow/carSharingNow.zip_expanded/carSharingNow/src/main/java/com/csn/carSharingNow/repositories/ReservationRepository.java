@@ -7,8 +7,8 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface ReservationRepository extends JpaRepository<Reservation, Long > {
-    Optional<Reservation> findById(Long id);
-    Reservation removeById(Long id);
-    List<Optional<Reservation>>findByuserId(Long userId);
+public interface ReservationRepository extends JpaRepository<Reservation, Integer > {
+    Reservation findById(int id);
+    Reservation removeById(int id);
+    List<Optional<Reservation>>findByUserID(long userId);
 }

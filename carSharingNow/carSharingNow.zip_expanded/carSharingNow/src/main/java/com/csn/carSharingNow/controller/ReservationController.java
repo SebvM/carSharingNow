@@ -30,13 +30,17 @@ public class ReservationController {
         return reservationList;
     }
     
-    //Findet alle Reservierungen für den User und fügt diese der Ergebnisliste hinzu, da die ergebnisse auch leer sein können.
     public List getAllReservationsForUser(long id) {
-        List<Optional<Reservation>> reservationList = reservationRepository.findByuserId(id); 
+        List<Optional<Reservation>> reservationList = reservationRepository.findByUserID(id); 
         List<Reservation> myReservationList = new ArrayList<>();
         
         for (Optional<Reservation> reservierung : reservationList) {
-			if (reservierung.isPresent()) {			
+			if (reservierung.isPresent()) {
+				if(reservierung.get().getCarName().isBlank() || reservierung.get().getCarName().isEmpty()) {
+					reservierung.get().setCarName(carRepository.findById(reservierung.get().getCarID()).get().getName());
+				}
+
+
 				myReservationList.add(reservierung.get());
 			}
 		}
@@ -44,17 +48,17 @@ public class ReservationController {
         return myReservationList;
     }
     
-    public void addReservation(Long carID, long userID, Date reservationStart, Date reservationEnd) {
+    public void addReservation(int carID, long userID, Date reservationStart, Date reservationEnd) {
         Reservation newReservation = new Reservation(carID, userID, reservationStart, reservationEnd);
         newReservation.setCarName(carRepository.findById(carID).get().getName());
         reservationRepository.save(newReservation);
     }
 
-    public void cancelReservation(Long id) {
+    public void cancelReservation(int id) {
         reservationRepository.removeById(id);
     }
 
-    public Optional<Reservation> findReservationById(Long id) {
+    public Reservation findReservationById(int id) {
         return reservationRepository.findById(id);
     }
 
@@ -67,7 +71,7 @@ public class ReservationController {
         for (Reservation reservation : allReservationsList) {
             if ((reservationStart.after(reservation.getReservationEnd()))
                     && reservationEnd.before(reservationStart)) {
-            	unavailableCarList.add(carRepository.findCarById(reservation.getCar().getId()));
+            	unavailableCarList.add(carRepository.findCarById(reservation.getCarID()));
             }
         }
         
