@@ -7,8 +7,6 @@ import javax.persistence.*;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.csn.carSharingNow.controller.CarController;
-import com.csn.carSharingNow.controller.UserController;
 import com.csn.carSharingNow.repositories.CarRepository;
 import com.csn.carSharingNow.repositories.UserRepository;
 
@@ -22,19 +20,17 @@ import java.util.Optional;
 public class Reservation {
 	
 	@Transient
-	UserController userController;
+	UserRepository userRepository;
 	@Transient
-	CarController carController;
+	CarRepository carRepository;
 	
-	@Autowired
-    public Reservation(UserController userController, CarController carController ){
-    	this.userController = userController;
-    	this.carController = carController;
+    public Reservation(){
+
     }
-    
-    public Reservation(Long carID, Long userID, Date reservationStart, Date reservationEnd){
-        this.car = carController.getCarByID(carID);
-        this.user = userController.getUserByID(userID).get();
+    @SuppressWarnings("deprecation")
+	public Reservation(Long carID, Long userID, Date reservationStart, Date reservationEnd){
+        this.car = carRepository.getById(carID);
+        this.user = userRepository.getById(userID);
         this.reservationStart = reservationStart;
         this.reservationEnd = reservationEnd;
     }

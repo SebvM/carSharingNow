@@ -5,10 +5,7 @@ import com.csn.carSharingNow.models.Car;
 import com.csn.carSharingNow.models.Reservation;
 import com.csn.carSharingNow.repositories.CarRepository;
 import com.csn.carSharingNow.repositories.ReservationRepository;
-import com.csn.carSharingNow.repositories.UserRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 
 import java.util.ArrayList;
@@ -22,9 +19,8 @@ public class ReservationController {
     @Autowired
     ReservationRepository reservationRepository;
     @Autowired
-    CarController carController;
-    @Autowired
-    UserController userController;
+    CarRepository carRepository;
+
     public ReservationController() {
 
     }
@@ -42,18 +38,15 @@ public class ReservationController {
         for (Optional<Reservation> reservierung : reservationList) {
 			if (reservierung.isPresent()) {			
 				myReservationList.add(reservierung.get());
-			} else {
-				myReservationList = null;
 			}
 		}
         
         return myReservationList;
     }
     
-    public void addReservation(Long carID, Date reservationStart, Date reservationEnd) {
-    	Long userID = userController.getCurrenUser().getId();
+    public void addReservation(Long carID, long userID, Date reservationStart, Date reservationEnd) {
         Reservation newReservation = new Reservation(carID, userID, reservationStart, reservationEnd);
-        newReservation.setCarName(carController.getCarByID(carID).getName());
+        newReservation.setCarName(carRepository.findById(carID).get().getName());
         reservationRepository.save(newReservation);
     }
 
@@ -68,14 +61,13 @@ public class ReservationController {
     public List<Car> getAvailableCars(Date reservationStart, Date reservationEnd) {
 
         List<Car> unavailableCarList = new ArrayList<>();
-        @SuppressWarnings("unchecked")
-		List<Car> availableCarList = carController.getAllCars();
+        List<Car> availableCarList = carRepository.findAll();
         List<Reservation> allReservationsList = reservationRepository.findAll();
 
         for (Reservation reservation : allReservationsList) {
             if ((reservationStart.after(reservation.getReservationEnd()))
                     && reservationEnd.before(reservationStart)) {
-            	unavailableCarList.add(carController.getCarByID(reservation.getCar().getId()));
+            	unavailableCarList.add(carRepository.findCarById(reservation.getCar().getId()));
             }
         }
         
