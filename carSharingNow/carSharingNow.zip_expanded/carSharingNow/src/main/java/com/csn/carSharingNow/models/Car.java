@@ -12,7 +12,7 @@ import javax.persistence.*;
 public class Car {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
-    private int id;
+    private Long id;
     private String name;
     private String carBrand;
     private float mileage;

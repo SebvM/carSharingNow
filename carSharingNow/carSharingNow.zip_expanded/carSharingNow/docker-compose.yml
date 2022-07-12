@@ -20,7 +20,7 @@ services:
     image: openjdk
     container_name: carSharingNowSys
     ports:
-      - 8080:8080
+      - 8443:8080
     depends_on:
       - database
     volumes:

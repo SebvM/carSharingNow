@@ -122,7 +122,7 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 		List<Car> carlist = new ArrayList<Car>();
 		Car car = null;
 		if(carController != null)
-			car = carController.getCarByID(selectedReservation.getCarID());
+			car = selectedReservation.getCar();
 		carlist.add(car); 
 		resForm.setcarList(carlist);
 		resForm.setstartTime(selectedReservation.getReservationStart());
