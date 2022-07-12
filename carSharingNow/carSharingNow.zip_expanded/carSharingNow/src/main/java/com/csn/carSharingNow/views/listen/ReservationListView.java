@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.security.PermitAll;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,12 +44,10 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 @PageTitle("Reservierungen | car Sharing Now")
 public class ReservationListView extends VerticalLayout implements AfterNavigationObserver { 
 	@Autowired
-	ReservationController reservationController;
-	@Autowired
 	CarController carController;
 	@Autowired
 	SecurityService securityService;
-	
+	ReservationController reservationController;
     Grid<Reservation> grid = new Grid<>(Reservation.class); 
     DateTimePicker startTime = new DateTimePicker("Start der Reservierung");
     DateTimePicker endTime = new DateTimePicker("Ende der Reservierung");     
@@ -58,7 +57,9 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
     ReservationForm resForm;
     List<Car> availableCars = new ArrayList<Car>();
     
-    public ReservationListView() {
+    @Autowired
+    public ReservationListView(ReservationController reservationController) {
+    	this.reservationController = reservationController;
         addClassName("reservation-list-view");
         setSizeFull();
         configureGrid(); 
@@ -109,26 +110,23 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 		endTime.addValueChangeListener(e -> endDateSelected());
 		carCombo.addValueChangeListener(e -> carComboSelected());
 		addReservationButton.addClickListener(e -> addReservationButtonClicked());
-	}	
+	}
 	
 	@SuppressWarnings("unchecked")
 	private void gridUpdate() {
 		grid.setItems(reservationController.getAllReservationsForUser(securityService.get().get().getId()));	
 	}
-	
+
 	public void setReservationFormData(Reservation selectedReservation) {
 		resForm.setSelectedReservation(selectedReservation);
 		resForm.setVisible(true);
-		List<Car> carlist = new ArrayList<Car>();
-		Car car = null;
-		if(carController != null)
-			car = selectedReservation.getCar();
-		carlist.add(car); 
+		List<Car> carlist = new ArrayList<Car>();		
+		carlist.add(selectedReservation.getCar()); 
 		resForm.setcarList(carlist);
 		resForm.setstartTime(selectedReservation.getReservationStart());
 		resForm.setendTime(selectedReservation.getReservationEnd());		
 	}
-	
+
 	private void startDateSelected() {
 		if(!startTime.isEmpty()) {
 			endTime.setReadOnly(false);
@@ -139,6 +137,7 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 		}
 
 	}
+
 	private void endDateSelected() {
 		if(!endTime.isEmpty() && endTime.getValue().isAfter(startTime.getValue())) {
 			carCombo.setReadOnly(false);
@@ -152,6 +151,7 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 			endTime.setValue(null);
 		}
 	}
+
 	private void carComboSelected() {
 		if(availableCars != null && carCombo.getValue() != null) {
 			addReservationButton.setEnabled(true);
@@ -159,10 +159,11 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 			addReservationButton.setEnabled(false);
 		}
 	}
+	
 	private void addReservationButtonClicked() {
 		Date startDate = Date.from(startTime.getValue().atZone(ZoneId.systemDefault()).toInstant());
-		Date endDate = Date.from(endTime.getValue().atZone(ZoneId.systemDefault()).toInstant());
-		reservationController.addReservation(carCombo.getValue().getId(), securityService.get().get().getId(), startDate, endDate);		
+		Date endDate = Date.from(endTime.getValue().atZone(ZoneId.systemDefault()).toInstant());	
+		reservationController.addReservation(carCombo.getValue().getId(), startDate, endDate);		
 		availableCars = new ArrayList<Car>();
 		carCombo.setItems(availableCars);
 		carCombo.setReadOnly(true);

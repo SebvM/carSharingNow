@@ -3,6 +3,7 @@ package com.csn.carSharingNow.controller;
 import com.csn.carSharingNow.models.Car;
 import com.csn.carSharingNow.repositories.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 

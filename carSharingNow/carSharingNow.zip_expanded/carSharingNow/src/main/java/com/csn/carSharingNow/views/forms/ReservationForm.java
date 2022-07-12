@@ -1,5 +1,6 @@
 package com.csn.carSharingNow.views.forms;
 
+import com.csn.carSharingNow.controller.ReservationController;
 import com.csn.carSharingNow.models.Car;
 import com.csn.carSharingNow.models.Reservation;
 import com.csn.carSharingNow.repositories.CarRepository;
@@ -37,9 +38,7 @@ public class ReservationForm extends FormLayout implements AfterNavigationObserv
   Button close = new Button("Zurück"); 
   Reservation selectedReservation;
   @Autowired
-  CarRepository carRepository;
-  @Autowired
-  ReservationRepository reservationRepository;
+  ReservationController reservationController;
   
   public ReservationForm(Reservation selectedReservation) {
 	this.selectedReservation = selectedReservation;  
@@ -77,6 +76,7 @@ public class ReservationForm extends FormLayout implements AfterNavigationObserv
   ComboBox<Car> getcarList(){
 	return car;	  
   }  
+  
   public void setcarList(List<Car> carList){
 	this.car.setItems(carList);  
   }
@@ -84,7 +84,7 @@ public class ReservationForm extends FormLayout implements AfterNavigationObserv
 @Override
 public void afterNavigation(AfterNavigationEvent event) {
 	close.addClickListener(e -> this.setVisible(false));
-    delete.addClickListener(e ->  reservationRepository.delete(selectedReservation));	
+    delete.addClickListener(e ->  reservationController.cancelReservation(selectedReservation.getId()));	
 }
   
   
