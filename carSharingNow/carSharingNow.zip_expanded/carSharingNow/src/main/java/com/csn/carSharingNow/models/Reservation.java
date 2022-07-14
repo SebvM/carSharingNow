@@ -11,23 +11,17 @@ import com.csn.carSharingNow.repositories.CarRepository;
 
 import java.util.Date;
 import java.util.Optional;
-
+/**
+ * Reservation Modell
+ * 
+ * @author Sebastian von Minden
+ *
+ */
 
 @Entity
 @Getter @Setter
 @Table(name="reservation")
 public class Reservation {
-	
-	
-    public Reservation(){
-    }
-    
-    public Reservation(Car car, User user, Date reservationStart, Date reservationEnd){
-        this.car = car;
-        this.user = user;
-        this.reservationStart = reservationStart;
-        this.reservationEnd = reservationEnd;
-    }
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY )
@@ -47,7 +41,13 @@ public class Reservation {
     
     @Transient
     private String carName;    
-
+    
+    public Reservation(Car car, User user, Date reservationStart, Date reservationEnd){
+        this.car = car;
+        this.user = user;
+        this.reservationStart = reservationStart;
+        this.reservationEnd = reservationEnd;
+    }
 
    	public String getcarName() {
    		return car.getName();

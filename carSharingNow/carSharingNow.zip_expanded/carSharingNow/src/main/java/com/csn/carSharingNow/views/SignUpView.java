@@ -2,6 +2,7 @@ package com.csn.carSharingNow.views;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.csn.carSharingNow.controller.UserController;
 import com.csn.carSharingNow.models.User;
 import com.csn.carSharingNow.repositories.UserRepository;
 import com.csn.carSharingNow.views.forms.SignUpForm;
@@ -22,12 +23,15 @@ import com.vaadin.flow.server.auth.AnonymousAllowed;
  *
  */
 
+@SuppressWarnings("serial")
 @Route("signUp") 
 @AnonymousAllowed
 @PageTitle("Sign Up | car Sharing Now")
 public class SignUpView extends VerticalLayout {
 	private final SignUpForm signUp = new SignUpForm(); 
 	
+	@Autowired
+	UserController userController;
 	@Autowired
 	UserRepository userRepository;
 	
@@ -65,10 +69,18 @@ public class SignUpView extends VerticalLayout {
 	public void signUpButtonIsPressed() {
 		User requestedUserRegistration =  new User(signUp.getUsernameField().getValue(), signUp.getEmailField().getValue(), signUp.getPasswordField().getValue(),
 				signUp.getFirstnameField().getValue(), signUp.getLastnameField().getValue(), signUp.getDatepickerDate(), signUp.userRoles());
-
-		if(requestedUserRegistration != null) {
-			userRepository.save(requestedUserRegistration);
-			signUp.getUI().ifPresent(ui -> ui.navigate("login"));
-		} 
+		
+		
+		if(userRepository.findByUsername(signUp.getUsernameField().getValue())== null) {
+			if(requestedUserRegistration != null) {
+				userController.addUser(requestedUserRegistration);
+				signUp.getUI().ifPresent(ui -> ui.navigate("login"));
+			} 
+		}else if(userRepository.findByEmail(signUp.getEmailField().getValue()) == null){
+			signUp.getEmailField().setErrorMessage("Email Adresse ist bereits in verwendung.");
+		}else {
+			signUp.getUsernameField().setErrorMessage("Benutzername ist bereits in verwendung.");
+		}
+		
 	}
 }

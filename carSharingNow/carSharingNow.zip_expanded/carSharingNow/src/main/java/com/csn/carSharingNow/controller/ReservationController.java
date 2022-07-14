@@ -22,9 +22,6 @@ public class ReservationController {
     @Autowired
     CarRepository carRepository;
 
-    public ReservationController() {
-
-    }
 
     public List<Reservation>  getAllReservations() {
         List<Reservation> reservationList = reservationRepository.findAll();

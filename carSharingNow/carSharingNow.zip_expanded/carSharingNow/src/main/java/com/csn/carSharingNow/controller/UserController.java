@@ -20,4 +20,7 @@ public class UserController {
 		return user;		
 	}
 	
+	public void addUser(User user) {
+		userRepostiory.save(user);			
+	}
 }
