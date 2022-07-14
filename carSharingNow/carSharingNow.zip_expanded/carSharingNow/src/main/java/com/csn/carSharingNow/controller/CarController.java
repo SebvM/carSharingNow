@@ -31,6 +31,10 @@ public class CarController {
         Car car = carRepository.findCarById(Id);
         return car;
     }
+    public void addCar(String carStationEnum,String name, String carBrand, float mileage, int carSeats){
+        Car newCar = new Car( carStationEnum, name,  carBrand,  mileage,  carSeats);
+        carRepository.save(newCar);
+    }
     
     public List<Car> getCarsByCarStationEnum(String CarStationEnum){
         List<Car> carList = carRepository.findCarByCarStationEnum(CarStationEnum);
