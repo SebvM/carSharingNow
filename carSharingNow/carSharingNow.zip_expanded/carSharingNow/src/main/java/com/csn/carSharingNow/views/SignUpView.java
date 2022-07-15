@@ -70,16 +70,25 @@ public class SignUpView extends VerticalLayout {
 		User requestedUserRegistration =  new User(signUp.getUsernameField().getValue(), signUp.getEmailField().getValue(), signUp.getPasswordField().getValue(),
 				signUp.getFirstnameField().getValue(), signUp.getLastnameField().getValue(), signUp.getDatepickerDate(), signUp.userRoles());
 		
-		
-		if(userRepository.findByUsername(signUp.getUsernameField().getValue())== null) {
+		if(signUp.getPasswordField().isEmpty() || signUp.getPasswordConfirmField().isEmpty()) {
+			signUp.getErrorMessageField().setVisible(true);
+			signUp.getErrorMessageField().setText("Passwort darf nicht leer sein!");
+
+		}else if(!signUp.getPasswordField().getValue().equals(signUp.getPasswordConfirmField().getValue())) {
+			signUp.getErrorMessageField().setVisible(true);
+			signUp.getErrorMessageField().setText("Passwörter müssen übereinstimmen!");
+
+		}else if(userRepository.findByUsername(signUp.getUsernameField().getValue())== null) {
 			if(requestedUserRegistration != null) {
 				userController.addUser(requestedUserRegistration);
 				signUp.getUI().ifPresent(ui -> ui.navigate("login"));
 			} 
 		}else if(userRepository.findByEmail(signUp.getEmailField().getValue()) == null){
-			signUp.getEmailField().setErrorMessage("Email Adresse ist bereits in verwendung.");
+			signUp.getErrorMessageField().setVisible(true);
+			signUp.getErrorMessageField().setText(signUp.getEmailField().getErrorMessage());
 		}else {
-			signUp.getUsernameField().setErrorMessage("Benutzername ist bereits in verwendung.");
+			signUp.getErrorMessageField().setVisible(true);
+			signUp.getErrorMessageField().setText(signUp.getUsernameField().getErrorMessage());
 		}
 		
 	}

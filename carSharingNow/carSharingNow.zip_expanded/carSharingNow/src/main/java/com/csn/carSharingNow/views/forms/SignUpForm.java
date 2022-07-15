@@ -83,13 +83,19 @@ public class SignUpForm extends FormLayout  {
 	       dateOfBirth.setErrorMessage("Ohne Geburtsdatum keine registrierung");	       
 	       
 	       errorMessageField = new Span();
-
 	       submitButton = new Button("Registriere dich jetzt gleich :D");
 	       submitButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 	       
 	       dateOfBirth.setRequired(true);
 	       LocalDate defaultdate = LocalDate.of(1978, 11, 19);;
 	       dateOfBirth.setValue(defaultdate);
+	       
+	       
+	       username.addFocusListener(e -> resetErrorMassageField());
+	       email.addFocusListener(e -> resetErrorMassageField());
+	       password.addFocusListener(e -> resetErrorMassageField());
+	       passwordConfirm.addFocusListener(e -> resetErrorMassageField());
+	       
 	       add(title, username, firstname, lastname, dateOfBirth, email, password,
 	               passwordConfirm, adminRole, errorMessageField,
 	               submitButton);
@@ -150,6 +156,10 @@ public class SignUpForm extends FormLayout  {
 			selectedDate = Date.from(this.getDateOfBirthField().getValue().atStartOfDay(ZoneId.systemDefault()).toInstant());	
 		   return selectedDate;
 	   }
-
+	   
+	   private void resetErrorMassageField() {
+		   this.errorMessageField.setVisible(false);
+		   this.errorMessageField.setText("Etwas ist schief gelaufen :(");
+	   }
 }
 
