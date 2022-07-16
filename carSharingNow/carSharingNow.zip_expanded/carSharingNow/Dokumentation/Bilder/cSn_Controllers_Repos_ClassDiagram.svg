@@ -369,16 +369,36 @@
       /><circle r="3.2" clip-path="url(#clipPath37)" cx="390.8" cy="50" stroke="none"
     /></g
     ><g font-size="10px" fill-opacity="1" fill="rgb(120,120,120)" text-rendering="geometricPrecision" image-rendering="optimizeQuality" stroke="rgb(120,120,120)" stroke-opacity="1"
-    ><text x="719" xml:space="preserve" y="611" stroke="none"
-      >Powered ByVisual Paradigm Community Edition</text
-      ><image font-size="12px" x="943" y="599" fill="white" width="16" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAABJ0lEQVR4XmNgwAPO
-GBs3nzYx6UIXJwoANdcA8X8obkaXxwvQNIPxWSOjFnR1WAGa5mVAL6wg2iVomlcD
-MettFRV2IL2OoCHImoHOPfCfgYEJJrcqNJQZJIYk3wKUZ0TWnItkAwg/OW1q6oIk
-bwPED9DUVMANAJqoCcSn0BS8B2LHk2ZmwlA2stwFoHo9uAEgAAwsB6DESTSFb4HY
-DYgrkcTOAtW6omgGCuoC8Qsg7gbivWiGvDkD8UItEB8G2twJpF+eMjU1hRtwVVub
-DSjYDNXQgcWQz0ANBkA6H8rvBsUOkhsgAGh6PVRBO5ohx4FyfTA5dH0oAOi/BqhC
-kEsOA/EJULQB6X8ENcMAkiFtQNwI1dyBrg4vQPIO2CB0eaIA1AU96OLIAAAk1QNN
-F+NelwAAAABJRU5ErkJggg==" height="16" stroke="white" preserveAspectRatio="none"
+    ><text x="845" xml:space="preserve" y="611" stroke="none"
+      >Sebastian von Minden</text
+      ><image font-size="12px" x="935" y="599" fill="white" width="16" xlink:href="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAIBAQIBA
+QICAgICAgICAwUDAwMDAwYEBAMFBwYHBwcGBwcICQsJCAgKCAcHCg0KCgsMDAwMB
+wkODw0MDgsMDAz/2wBDAQICAgMDAwYDAwYMCAcIDAwMDAwMDAwMDAwMDAwMDAwMD
+AwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAz/wAARCAApACoDASIAAhEBA
+xEB/8QAGgABAQEAAwEAAAAAAAAAAAAACAAHAwUGCf/EACkQAAEEAgIBAwQDAQEAA
+AAAAAMBAgQFBgcACBEJEhQTFiEiFTFhI1H/xAAUAQEAAAAAAAAAAAAAAAAAAAAA/
+8QAFBEBAAAAAAAAAAAAAAAAAAAAAP/aAAwDAQACEQMRAD8A++V5eQsZpZllZTItf
+XV4HyZUqSVoQxhMarnke9yo1rWtRVVyqiIiKq8I2vJW3fUtxqLnFfsK+0XpPII7p
+GLw8ZgRfu7KYT1RQWUuXNCccEBhohBRgAQ6DKxxJDXKoWcvrFbCss060ZJ18wOny
+DKNu71xe2rKOrrAsYKNAaMYZ06bLM5keLEG2UISue/6j3yRsEMrl8JnuedtuxHZr
+a2s8Z694/Uaxn61yaLH3hhmdQwtsKesO1ronxTBUsWTEKIM1WlhmcRXNjp+iIZjQ
+1aX0v3JomI621L2CzbKLKO5TPxfajot3R3CIxyfRWWCMKwhvc5UVDMKVjFTyscqf
+rzWuofaGt7baaFksWtk4/c186TR5Jj0swyzMZt4hFFLgHcNVarhkTy16fqQbxkb+
+hGquocKvRuxdY9z+41xCmBJh/31UQ2EZJa+OlrGxmrHYuTwvhqtb8UT/PjwSORF/
+LV8AquXLlwD/wCovgGnJWj3bA2/W2TousnOsqe2op8ytyOulH9sZoK2VCKGU08p5
+BR2hERqHeQbHI7yic8v6TnUzK+rmmcqmZgMdRa7LyWRl/24Sa65nYsyQwbWwptwV
+zpFtLa0bVJJM9/tcqhG94RDe7h7yh+8u9/UXE7oIzYfIya8yN4ihR4Zd1W1BSVon
+KqePLELMlsT+0JAG9PyNPCu4Hh+xuHZ5sDT9xT62zer1zl1gJQw8inY8l82r8/hx
+WRHHCx5URfLFI5w0ciK4ZE8tUr6Y9IHIIGpKbW+1NzS851dUKppmJUGPux+JmEoj
+3mkSbyUaXNnznyJJCSDMbJCIxHuQg3jX6fHBy4BQ6yWt1007VJ15vry3yTB8oppW
+Tastbiakqwgx4hAjsKA5yPU0n4vyYxoxSI4jo5SDe97o3ver+F/uZJr5vfbp7XDC
+42QhyzI7dPpt8uBVixazjSiO/8AB/Km1rFVfx7yDT+1Tig4GW9v+rkHtlqYdG63m
+YvkdHYx8gxXJYIRmmYxcRlVY00TCIrH+Pc8ZBOT2lCYwnfqR3Mmg+oBlfW4BKrsd
+rfJMcLXt8LnWE0s3JMOt2I0f/fxFYadWKrnu9wpoUGP2qjZJ0/dVXy4BuiesV1Rm
+Ua2CdjtKiC1PKiPmEEMpv8AigeRCov+K3z/AJzppHqu4ztGD8fReB7L3xcyEMyKW
+loJFTjqEYP3tU13YMBBaJVVqKoCHL+V9onqntVVcuAf+rXVrK6Db2Qbh27cUd9tb
+JK9lHEi0jH/AMLhdM0iF/jILytaYykMjTSJRWsccjBeBiGEQ2oDly4H/9k=
+" height="16" stroke="white" preserveAspectRatio="none"
     /></g
   ></g
 ></svg
