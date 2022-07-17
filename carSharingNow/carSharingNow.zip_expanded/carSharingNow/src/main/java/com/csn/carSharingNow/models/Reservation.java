@@ -42,6 +42,8 @@ public class Reservation {
     @Transient
     private String carName;    
     
+    public Reservation() {
+    }       
     public Reservation(Car car, User user, Date reservationStart, Date reservationEnd){
         this.car = car;
         this.user = user;

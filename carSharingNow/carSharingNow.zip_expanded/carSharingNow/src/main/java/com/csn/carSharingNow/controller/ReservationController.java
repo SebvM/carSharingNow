@@ -8,6 +8,7 @@ import com.csn.carSharingNow.repositories.CarRepository;
 import com.csn.carSharingNow.repositories.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,6 +47,7 @@ public class ReservationController {
         reservationRepository.save(newReservation);
     }
 
+    @Transactional
     public void cancelReservation(int id) {
         reservationRepository.removeById(id);
     }

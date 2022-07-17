@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.annotation.security.PermitAll;
 
@@ -15,6 +16,7 @@ import com.csn.carSharingNow.controller.CarController;
 import com.csn.carSharingNow.controller.ReservationController;
 import com.csn.carSharingNow.models.Car;
 import com.csn.carSharingNow.models.Reservation;
+import com.csn.carSharingNow.repositories.ReservationRepository;
 import com.csn.carSharingNow.security.SecurityService;
 import com.csn.carSharingNow.views.MainLayout;
 import com.csn.carSharingNow.views.forms.ReservationForm;
@@ -104,24 +106,26 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 	@Override
 	public void afterNavigation(AfterNavigationEvent event) {
 		gridUpdate();
-		grid.addSelectionListener(e ->setReservationFormData(selectedReservation = e.getFirstSelectedItem().get()));
+		grid.addSelectionListener(e -> e.getFirstSelectedItem().ifPresent(res -> setReservationFormData(selectedReservation = e.getFirstSelectedItem().get())) );
 		startTime.addValueChangeListener(e -> startDateSelected());
 		endTime.addValueChangeListener(e -> endDateSelected());
 		carCombo.addValueChangeListener(e -> carComboSelected());
 		addReservationButton.addClickListener(e -> addReservationButtonClicked());
+		resForm.setReservationController(reservationController);
+		resForm.getDelete().addClickListener(e-> deleteReservation(grid.getSelectedItems()));
 	}	
 	
 	private void gridUpdate() {
 		grid.setItems(reservationController.getAllReservationsForUser(securityService.get().get().getId()));	
+
 	}
 	
 	public void setReservationFormData(Reservation selectedReservation) {
 		resForm.setSelectedReservation(selectedReservation);
 		resForm.setVisible(true);
-		List<Car> carlist = new ArrayList<Car>();
+		
 		Car car = selectedReservation.getCar();
-		carlist.add(car); 
-		resForm.setcarList(carlist);
+		resForm.getCar().setValue(car.getName());
 		resForm.setstartTime(selectedReservation.getReservationStart());
 		resForm.setendTime(selectedReservation.getReservationEnd());		
 	}
@@ -167,8 +171,14 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 		endTime.setValue(null);
 		endTime.setReadOnly(true);
 		startTime.setValue(null);
-		startTime.setReadOnly(true);
 		
 		gridUpdate();
 	}
+	private void deleteReservation(Set<Reservation> set) {
+		set.forEach(res -> reservationController.cancelReservation(res.getId()));
+		
+		resForm.setVisible(false);
+		gridUpdate();
+	}
+	
 }
