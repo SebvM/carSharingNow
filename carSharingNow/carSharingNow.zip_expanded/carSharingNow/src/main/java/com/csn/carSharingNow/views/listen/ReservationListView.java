@@ -1,5 +1,6 @@
 package com.csn.carSharingNow.views.listen;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -95,7 +96,11 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
         carCombo.setReadOnly(true);         
         startTime.setHelperText("Start muss vor Ende sein.");
         startTime.setMin(LocalDateTime.now());
+        startTime.getDatePickerI18n().setDateFormat("dd.mm.yyy");
+        startTime.setStep(Duration.ofMinutes(15));
         endTime.setHelperText("Ende muss nach Start sein.");
+        endTime.setStep(Duration.ofMinutes(15));
+        endTime.getDatePickerI18n().setDateFormat("dd.mm.yyy");
         addReservationButton.setEnabled(false);
         HorizontalLayout toolbar = new HorizontalLayout(startTime, endTime, carCombo, addReservationButton); 
         toolbar.addClassName("toolbar");
@@ -135,7 +140,6 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 			endTime.setReadOnly(false);
 			endTime.setMin(startTime.getValue());
 		}else {
-			endTime.setReadOnly(true);
 			endTime.setValue(null);
 		}
 
@@ -145,11 +149,10 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 			carCombo.setReadOnly(false);
 			availableCars = reservationController.getAvailableCars(Date.from(startTime.getValue().atZone(ZoneId.systemDefault()).toInstant()), Date.from(endTime.getValue().atZone(ZoneId.systemDefault()).toInstant()));
 			carCombo.setItems(availableCars);
-			availableCars.forEach(c -> System.out.println(c.toString()) );
-			
+			availableCars.forEach(c -> System.out.println(c.toString()));
+			System.out.println();
 		}else {
 			availableCars = new ArrayList<Car>();
-			endTime.setReadOnly(true);
 			endTime.setValue(null);
 		}
 	}

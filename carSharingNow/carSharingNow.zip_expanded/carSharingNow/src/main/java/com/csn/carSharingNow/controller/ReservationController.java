@@ -58,18 +58,25 @@ public class ReservationController {
 
     public List<Car> getAvailableCars(Date reservationStart, Date reservationEnd) {
 
-        List<Car> unavailableCarList = new ArrayList<>();
         List<Car> availableCarList = carRepository.findAll();
         List<Reservation> allReservationsList = reservationRepository.findAll();
 
         for (Reservation reservation : allReservationsList) {
             if ((reservationStart.after(reservation.getReservationEnd()))
-                    && reservationEnd.before(reservationStart)) {
-            	unavailableCarList.add(reservation.getCar());
+                    && reservationEnd.before(reservation.getReservationStart())) {
+            	availableCarList.remove(reservation.getCar());
+            }else if ((reservationEnd.after(reservation.getReservationStart()))
+                    && reservationEnd.before(reservation.getReservationEnd())) {
+            	availableCarList.remove(reservation.getCar());
+            }else if ((reservationStart.after(reservation.getReservationStart()))
+                    && reservationStart.before(reservation.getReservationEnd())) {
+            	availableCarList.remove(reservation.getCar());
+            }else if ((reservationStart.before(reservation.getReservationStart()))
+                    && reservationEnd.after(reservation.getReservationEnd())) {
+            	availableCarList.remove(reservation.getCar());
             }
         }
         
-        availableCarList.removeAll(unavailableCarList);
         
         return availableCarList;
     }

@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -52,7 +53,7 @@ public class SignUpForm extends FormLayout  {
 	   private Span errorMessageField;
 
 	   private Button submitButton;
-	   
+	   private static final Locale deLocale = new Locale("de", "DE");
 	   
 	   
 	   public SignUpForm() {	
@@ -87,6 +88,7 @@ public class SignUpForm extends FormLayout  {
 	       submitButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 	       
 	       dateOfBirth.setRequired(true);
+	       dateOfBirth.setLocale(deLocale);
 	       LocalDate defaultdate = LocalDate.of(1978, 11, 19);;
 	       dateOfBirth.setValue(defaultdate);
 	       

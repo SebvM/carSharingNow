@@ -9,6 +9,7 @@ services:
       MYSQL_DATABASE: cSnDB
       MYSQL_USER: dave
       MYSQL_PASSWORD: keks
+      LANG: de_DE.UTF-8
     volumes:
      - dockerCSNDatabaseVolume:/var/lib/mysql
 
