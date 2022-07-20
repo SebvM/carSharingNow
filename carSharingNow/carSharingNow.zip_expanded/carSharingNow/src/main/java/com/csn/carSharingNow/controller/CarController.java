@@ -28,13 +28,12 @@ public class CarController {
         return carList;
     }
 
-    public Car getCarByID(int Id) {
+    public Car getCarById(int Id) {
         Car car = carRepository.findCarById(Id);
         return car;
     }
-    public void addCar(String carStationEnum,String name, String carBrand, float mileage, int carSeats){
-        Car newCar = new Car( carStationEnum, name,  carBrand,  mileage,  carSeats);
-        carRepository.save(newCar);
+    public void addCar(Car car){
+        carRepository.save(car);
     }
     public void removeCar(int Id){
         carRepository.delete(carRepository.getReferenceById(Id));
