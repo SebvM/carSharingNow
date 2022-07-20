@@ -11,8 +11,8 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 /**
- * User Object welches die UserDetails der Spring Security 
- * ersetzt damit wir diese in der DB speichern können
+ * User Modell welches die UserDetails der Spring Security 
+ * ersetzt damit wir diese in der DB speichern können und uns damit Anmelden.
  * 
  * @author Sebastian von Minden
  *

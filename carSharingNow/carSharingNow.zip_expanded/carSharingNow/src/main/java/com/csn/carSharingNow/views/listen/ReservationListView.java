@@ -1,11 +1,13 @@
 package com.csn.carSharingNow.views.listen;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import javax.annotation.security.PermitAll;
 
@@ -15,6 +17,7 @@ import com.csn.carSharingNow.controller.CarController;
 import com.csn.carSharingNow.controller.ReservationController;
 import com.csn.carSharingNow.models.Car;
 import com.csn.carSharingNow.models.Reservation;
+import com.csn.carSharingNow.repositories.ReservationRepository;
 import com.csn.carSharingNow.security.SecurityService;
 import com.csn.carSharingNow.views.MainLayout;
 import com.csn.carSharingNow.views.forms.ReservationForm;
@@ -93,7 +96,11 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
         carCombo.setReadOnly(true);         
         startTime.setHelperText("Start muss vor Ende sein.");
         startTime.setMin(LocalDateTime.now());
+        startTime.getDatePickerI18n().setDateFormat("dd.mm.yyy");
+        startTime.setStep(Duration.ofMinutes(15));
         endTime.setHelperText("Ende muss nach Start sein.");
+        endTime.setStep(Duration.ofMinutes(15));
+        endTime.getDatePickerI18n().setDateFormat("dd.mm.yyy");
         addReservationButton.setEnabled(false);
         HorizontalLayout toolbar = new HorizontalLayout(startTime, endTime, carCombo, addReservationButton); 
         toolbar.addClassName("toolbar");
@@ -104,24 +111,26 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 	@Override
 	public void afterNavigation(AfterNavigationEvent event) {
 		gridUpdate();
-		grid.addSelectionListener(e ->setReservationFormData(selectedReservation = e.getFirstSelectedItem().get()));
+		grid.addSelectionListener(e -> e.getFirstSelectedItem().ifPresent(res -> setReservationFormData(selectedReservation = e.getFirstSelectedItem().get())) );
 		startTime.addValueChangeListener(e -> startDateSelected());
 		endTime.addValueChangeListener(e -> endDateSelected());
 		carCombo.addValueChangeListener(e -> carComboSelected());
 		addReservationButton.addClickListener(e -> addReservationButtonClicked());
+		resForm.setReservationController(reservationController);
+		resForm.getDelete().addClickListener(e-> deleteReservation(grid.getSelectedItems()));
 	}	
 	
 	private void gridUpdate() {
 		grid.setItems(reservationController.getAllReservationsForUser(securityService.get().get().getId()));	
+
 	}
 	
 	public void setReservationFormData(Reservation selectedReservation) {
 		resForm.setSelectedReservation(selectedReservation);
 		resForm.setVisible(true);
-		List<Car> carlist = new ArrayList<Car>();
+		
 		Car car = selectedReservation.getCar();
-		carlist.add(car); 
-		resForm.setcarList(carlist);
+		resForm.getCar().setValue(car.getName());
 		resForm.setstartTime(selectedReservation.getReservationStart());
 		resForm.setendTime(selectedReservation.getReservationEnd());		
 	}
@@ -131,7 +140,6 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 			endTime.setReadOnly(false);
 			endTime.setMin(startTime.getValue());
 		}else {
-			endTime.setReadOnly(true);
 			endTime.setValue(null);
 		}
 
@@ -141,11 +149,10 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 			carCombo.setReadOnly(false);
 			availableCars = reservationController.getAvailableCars(Date.from(startTime.getValue().atZone(ZoneId.systemDefault()).toInstant()), Date.from(endTime.getValue().atZone(ZoneId.systemDefault()).toInstant()));
 			carCombo.setItems(availableCars);
-			availableCars.forEach(c -> System.out.println(c.toString()) );
-			
+			availableCars.forEach(c -> System.out.println(c.toString()));
+			System.out.println();
 		}else {
 			availableCars = new ArrayList<Car>();
-			endTime.setReadOnly(true);
 			endTime.setValue(null);
 		}
 	}
@@ -167,8 +174,14 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 		endTime.setValue(null);
 		endTime.setReadOnly(true);
 		startTime.setValue(null);
-		startTime.setReadOnly(true);
 		
 		gridUpdate();
 	}
+	private void deleteReservation(Set<Reservation> set) {
+		set.forEach(res -> reservationController.cancelReservation(res.getId()));
+		
+		resForm.setVisible(false);
+		gridUpdate();
+	}
+	
 }

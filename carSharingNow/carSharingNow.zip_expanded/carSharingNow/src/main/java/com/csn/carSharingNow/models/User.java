@@ -23,7 +23,7 @@ import com.csn.carSharingNow.security.SecurityConfiguration;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
- * User Object
+ * User Modell
  * 
  * @author Sebastian von Minden
  *

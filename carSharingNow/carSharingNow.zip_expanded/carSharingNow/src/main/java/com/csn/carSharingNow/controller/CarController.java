@@ -5,10 +5,7 @@ import com.csn.carSharingNow.models.CarStationEnum;
 import com.csn.carSharingNow.repositories.CarRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 
@@ -17,10 +14,6 @@ public class CarController {
 
     @Autowired
     CarRepository carRepository;
-
-    public CarController() {
-
-    }
 
 
     public List<Car> getAllCars() {

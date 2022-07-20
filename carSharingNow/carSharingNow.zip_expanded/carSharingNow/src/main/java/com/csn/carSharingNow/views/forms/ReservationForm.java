@@ -1,8 +1,8 @@
 package com.csn.carSharingNow.views.forms;
 
+import com.csn.carSharingNow.controller.ReservationController;
 import com.csn.carSharingNow.models.Car;
 import com.csn.carSharingNow.models.Reservation;
-import com.csn.carSharingNow.repositories.CarRepository;
 import com.csn.carSharingNow.repositories.ReservationRepository;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -11,6 +11,7 @@ import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 
@@ -21,26 +22,24 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
+@SuppressWarnings("serial")
 @Getter @Setter
 public class ReservationForm extends FormLayout implements AfterNavigationObserver{   
 	
   DateTimePicker startTime = new DateTimePicker("Start der Reservierung");
   DateTimePicker endTime = new DateTimePicker("Ende der Reservierung");
   
-  ComboBox<Car> car = new ComboBox<Car>();
-  List<Car> carList = new ArrayList<Car>();
+  TextField car = new TextField("Fahrzeug");
   Button delete = new Button("Löschen");
   Button close = new Button("Zurück"); 
   Reservation selectedReservation;
-  @Autowired
-  CarRepository carRepository;
-  @Autowired
-  ReservationRepository reservationRepository;
   
+  @Autowired
+  ReservationController reservationController;
   public ReservationForm(Reservation selectedReservation) {
 	this.selectedReservation = selectedReservation;  
     addClassName("rerservation-form"); 
@@ -74,18 +73,13 @@ public class ReservationForm extends FormLayout implements AfterNavigationObserv
   public void setendTime(Date endTime) {
 	this.endTime.setValue(endTime.toInstant().atZone(ZoneId.systemDefault()).toLocalDateTime());
   }
-  ComboBox<Car> getcarList(){
-	return car;	  
-  }  
-  public void setcarList(List<Car> carList){
-	this.car.setItems(carList);  
-  }
 
-@Override
-public void afterNavigation(AfterNavigationEvent event) {
-	close.addClickListener(e -> this.setVisible(false));
-    delete.addClickListener(e ->  reservationRepository.delete(selectedReservation));	
-}
+
+  @Override
+  public void afterNavigation(AfterNavigationEvent event) {
+	  close.addClickListener(e -> this.setVisible(false));
+	 
+  }
   
   
   

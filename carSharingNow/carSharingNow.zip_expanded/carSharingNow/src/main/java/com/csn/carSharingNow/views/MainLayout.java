@@ -31,7 +31,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 @Route("")
 @PermitAll
 public class MainLayout extends AppLayout {
-	 String username = "";
+	 	String username = "";
 	    @Autowired
 	    private UserRepository userRepository;
 	    

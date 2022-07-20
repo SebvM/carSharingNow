@@ -8,6 +8,7 @@ import com.csn.carSharingNow.repositories.CarRepository;
 import com.csn.carSharingNow.repositories.ReservationRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,9 +23,6 @@ public class ReservationController {
     @Autowired
     CarRepository carRepository;
 
-    public ReservationController() {
-
-    }
 
     public List<Reservation>  getAllReservations() {
         List<Reservation> reservationList = reservationRepository.findAll();
@@ -49,6 +47,7 @@ public class ReservationController {
         reservationRepository.save(newReservation);
     }
 
+    @Transactional
     public void cancelReservation(int id) {
         reservationRepository.removeById(id);
     }
@@ -59,18 +58,25 @@ public class ReservationController {
 
     public List<Car> getAvailableCars(Date reservationStart, Date reservationEnd) {
 
-        List<Car> unavailableCarList = new ArrayList<>();
         List<Car> availableCarList = carRepository.findAll();
         List<Reservation> allReservationsList = reservationRepository.findAll();
 
         for (Reservation reservation : allReservationsList) {
             if ((reservationStart.after(reservation.getReservationEnd()))
-                    && reservationEnd.before(reservationStart)) {
-            	unavailableCarList.add(reservation.getCar());
+                    && reservationEnd.before(reservation.getReservationStart())) {
+            	availableCarList.remove(reservation.getCar());
+            }else if ((reservationEnd.after(reservation.getReservationStart()))
+                    && reservationEnd.before(reservation.getReservationEnd())) {
+            	availableCarList.remove(reservation.getCar());
+            }else if ((reservationStart.after(reservation.getReservationStart()))
+                    && reservationStart.before(reservation.getReservationEnd())) {
+            	availableCarList.remove(reservation.getCar());
+            }else if ((reservationStart.before(reservation.getReservationStart()))
+                    && reservationEnd.after(reservation.getReservationEnd())) {
+            	availableCarList.remove(reservation.getCar());
             }
         }
         
-        availableCarList.removeAll(unavailableCarList);
         
         return availableCarList;
     }

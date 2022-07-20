@@ -26,9 +26,6 @@ import com.vaadin.flow.server.VaadinServletRequest;
 
 @Component
 public class SecurityService {
-
-
-    
     
     @Autowired
     private UserRepository userRepository;

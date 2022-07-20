@@ -26,6 +26,7 @@ import com.vaadin.flow.router.Route;
  *
  */
 
+@SuppressWarnings("serial")
 @Route(value = "userData", layout=MainLayout.class)
 @PermitAll
 public class UserDataView extends VerticalLayout implements AfterNavigationObserver {

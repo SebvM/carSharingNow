@@ -9,29 +9,23 @@ services:
       MYSQL_DATABASE: cSnDB
       MYSQL_USER: dave
       MYSQL_PASSWORD: keks
-    ports:
-      - 3306:3306
+      LANG: de_DE.UTF-8
     volumes:
      - dockerCSNDatabaseVolume:/var/lib/mysql
-    networks:
-    - cSnNetwork
+
       
   springapi:
     image: openjdk
     container_name: carSharingNowSys
     ports:
-      - 8080:8080
+      - 8443:8443
     depends_on:
       - database
     volumes:
       - ./target/carSharingNow-0.0.1-SNAPSHOT.jar:/app.jar
     command: ["java", "-jar", "app.jar"]    
-    networks:
-    - cSnNetwork
  
 volumes:
   dockerCSNDatabaseVolume:   
-  
-networks:
-  cSnNetwork:
+
     
