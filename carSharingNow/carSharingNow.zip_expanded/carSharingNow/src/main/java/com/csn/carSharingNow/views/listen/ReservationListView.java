@@ -96,10 +96,9 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
         carCombo.setReadOnly(true);         
         startTime.setHelperText("Start muss vor Ende sein.");
         startTime.setMin(LocalDateTime.now());
-        startTime.setStep(Duration.ofMinutes(15));
+        
         endTime.setHelperText("Ende muss nach Start sein.");
-        endTime.setStep(Duration.ofMinutes(15));
-        endTime.getDatePickerI18n().setDateFormat("dd.mm.yyy");
+       
         addReservationButton.setEnabled(false);
         HorizontalLayout toolbar = new HorizontalLayout(startTime, endTime, carCombo, addReservationButton); 
         toolbar.addClassName("toolbar");
@@ -118,7 +117,6 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 		resForm.setReservationController(reservationController);
 		resForm.getDelete().addClickListener(e-> deleteReservation(grid.getSelectedItems()));
 
-        startTime.getDatePickerI18n().setDateFormat("dd.mm.yyy");
 	}	
 	
 	private void gridUpdate() {
