@@ -2,9 +2,8 @@ package com.csn.carSharingNow.models;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Set;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,23 +17,27 @@ import org.springframework.security.core.userdetails.UserDetails;
  *
  */
 
+@SuppressWarnings("serial")
 public class UserDetailsImpl extends User implements UserDetails {
 
+	private User user;
     public UserDetailsImpl(User user) {
-        super(user);
+        this.user = user;
     }
 	
-	public void grantAuthority(Role authority) {
-	    if ( roles == null ) roles = new HashSet<>();
-	    roles.add(authority);
-	}
+
 
 	
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-		 List<GrantedAuthority> authorities = new ArrayList<>();
-	        roles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role.toString())));
-	        return authorities;
+    	List<Role> roles = user.getRoles();
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+         
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
+        }
+         
+        return authorities;
     }
 
     @Override

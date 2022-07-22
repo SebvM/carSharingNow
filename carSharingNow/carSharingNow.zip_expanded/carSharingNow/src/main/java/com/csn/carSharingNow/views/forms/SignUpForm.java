@@ -2,8 +2,10 @@ package com.csn.carSharingNow.views.forms;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Stream;
@@ -31,6 +33,7 @@ import com.vaadin.flow.router.PageTitle;
  */
 
 
+@SuppressWarnings("serial")
 @PageTitle("Registrieren | car Sharing Now")
 public class SignUpForm extends FormLayout  {
 
@@ -48,7 +51,6 @@ public class SignUpForm extends FormLayout  {
 	   private PasswordField password;
 	   private PasswordField passwordConfirm;
 
-	   private Checkbox adminRole;
 
 	   private Span errorMessageField;
 
@@ -65,8 +67,6 @@ public class SignUpForm extends FormLayout  {
 	       email = new EmailField("Email");
 	       dateOfBirth = new DatePicker("Geburtsdatum");
 
-	       adminRole = new Checkbox("Erstelle Admin Account");
-	       adminRole.getStyle().set("margin-top", "10px");
 
 	       password = new PasswordField("Passwort");
 	       passwordConfirm = new PasswordField("Passwort bestätigen");
@@ -99,7 +99,7 @@ public class SignUpForm extends FormLayout  {
 	       passwordConfirm.addFocusListener(e -> resetErrorMassageField());
 	       
 	       add(title, username, firstname, lastname, dateOfBirth, email, password,
-	               passwordConfirm, adminRole, errorMessageField,
+	               passwordConfirm, errorMessageField,
 	               submitButton);
 
 	       // Max width fürs Form
@@ -132,7 +132,6 @@ public class SignUpForm extends FormLayout  {
 	   public TextField getLastnameField() { return lastname; }
 	   public DatePicker getDateOfBirthField() { return dateOfBirth; }
 	   public EmailField getEmailField() { return email; }
-	   public Checkbox getAdminRole() { return adminRole; }
 
 
 
@@ -141,16 +140,11 @@ public class SignUpForm extends FormLayout  {
 	       Stream.of(components).forEach(comp -> comp.setRequiredIndicatorVisible(true));
 	   }
 
-	   public Set<Role> userRoles(){
-		   Set<Role> roles = new HashSet<>();
-		   if(this.getAdminRole().isEnabled()) {
-			   roles.add(Role.ADMIN);
-		   }else {
-			   roles.add(Role.USER);
-		   }
+	   public List<Role> userRoles(){
+		   List<Role> roles = new ArrayList<>();
+		   roles.add(Role.USER);
 		   
 		   return roles;
-		  
 	   }
 		
 	   public Date getDatepickerDate() {

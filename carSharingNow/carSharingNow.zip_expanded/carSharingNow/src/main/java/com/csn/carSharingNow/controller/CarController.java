@@ -30,4 +30,8 @@ public class CarController {
         return carList;
     }
 
+	public void addCar(Car car) {
+		carRepository.save(car);		
+	}
+
 }
