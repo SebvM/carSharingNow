@@ -1,12 +1,10 @@
 package com.csn.carSharingNow.views.listen;
 
 import java.time.Duration;
-import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 
 import javax.annotation.security.PermitAll;
@@ -17,7 +15,6 @@ import com.csn.carSharingNow.controller.CarController;
 import com.csn.carSharingNow.controller.ReservationController;
 import com.csn.carSharingNow.models.Car;
 import com.csn.carSharingNow.models.Reservation;
-import com.csn.carSharingNow.repositories.ReservationRepository;
 import com.csn.carSharingNow.security.SecurityService;
 import com.csn.carSharingNow.views.MainLayout;
 import com.csn.carSharingNow.views.forms.ReservationForm;
@@ -32,7 +29,6 @@ import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
-import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
 /**
  * View die eine Liste in einem Grid anzeigt 
  * und ein Eigabefeld für neue elemente für die Liste
@@ -95,12 +91,8 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
         endTime.setReadOnly(true);
         carCombo.setReadOnly(true);         
         startTime.setHelperText("Start muss vor Ende sein.");
-        startTime.setMin(LocalDateTime.now());
-        startTime.getDatePickerI18n().setDateFormat("dd.mm.yyy");
         startTime.setStep(Duration.ofMinutes(15));
         endTime.setHelperText("Ende muss nach Start sein.");
-        endTime.setStep(Duration.ofMinutes(15));
-        endTime.getDatePickerI18n().setDateFormat("dd.mm.yyy");
         addReservationButton.setEnabled(false);
         HorizontalLayout toolbar = new HorizontalLayout(startTime, endTime, carCombo, addReservationButton); 
         toolbar.addClassName("toolbar");
@@ -108,17 +100,6 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
         return toolbar;
     }
 
-	@Override
-	public void afterNavigation(AfterNavigationEvent event) {
-		gridUpdate();
-		grid.addSelectionListener(e -> e.getFirstSelectedItem().ifPresent(res -> setReservationFormData(selectedReservation = e.getFirstSelectedItem().get())) );
-		startTime.addValueChangeListener(e -> startDateSelected());
-		endTime.addValueChangeListener(e -> endDateSelected());
-		carCombo.addValueChangeListener(e -> carComboSelected());
-		addReservationButton.addClickListener(e -> addReservationButtonClicked());
-		resForm.setReservationController(reservationController);
-		resForm.getDelete().addClickListener(e-> deleteReservation(grid.getSelectedItems()));
-	}	
 	
 	private void gridUpdate() {
 		grid.setItems(reservationController.getAllReservationsForUser(securityService.get().get().getId()));	
@@ -142,8 +123,8 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 		}else {
 			endTime.setValue(null);
 		}
-
 	}
+	
 	private void endDateSelected() {
 		if(!endTime.isEmpty() && endTime.getValue().isAfter(startTime.getValue())) {
 			carCombo.setReadOnly(false);
@@ -183,5 +164,16 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 		resForm.setVisible(false);
 		gridUpdate();
 	}
-	
+
+	@Override
+	public void afterNavigation(AfterNavigationEvent event) {
+		gridUpdate();
+		grid.addSelectionListener(e -> e.getFirstSelectedItem().ifPresent(res -> setReservationFormData(selectedReservation = e.getFirstSelectedItem().get())) );
+		startTime.addValueChangeListener(e -> startDateSelected());
+		endTime.addValueChangeListener(e -> endDateSelected());
+		carCombo.addValueChangeListener(e -> carComboSelected());
+		addReservationButton.addClickListener(e -> addReservationButtonClicked());
+		resForm.setReservationController(reservationController);
+		resForm.getDelete().addClickListener(e-> deleteReservation(grid.getSelectedItems()));
+	}	
 }
