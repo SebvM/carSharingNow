@@ -20,4 +20,9 @@ public enum CarStationEnum {
         this.street = street;
         this.houseNumber = houseNumber;
     }
+    
+	@Override
+	public String toString() {
+	  return city+", "+street+" "+houseNumber;
+	}
 }

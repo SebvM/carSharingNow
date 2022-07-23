@@ -1,11 +1,13 @@
 package com.csn.carSharingNow.views.listen;
 
+
 import javax.annotation.security.RolesAllowed;
 
 import com.csn.carSharingNow.controller.CarController;
 import com.csn.carSharingNow.models.Car;
 import com.csn.carSharingNow.views.forms.CarForm;
 import com.vaadin.flow.component.Component;
+import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
@@ -20,33 +22,43 @@ public class AdministrationCarListView extends VerticalLayout implements AfterNa
 	CarController carController;
 	
 	Car selectedCar;
-	H3 userlistheader;
+	H3 carlistheader;
 	CarForm carForm;
-	Grid<Car> grid = new Grid<>(Car.class); 
+	Grid<Car> grid = new Grid<>(Car.class); 	
+	
+	Button addCarButton = new Button("Fahrzeug hinzufügen");
 	
 	public AdministrationCarListView(CarController carController) {
 		this.carController = carController;
-		userlistheader = new H3("Fahrzeuge: "+ carController.getAllCars().size());
+		carlistheader = new H3("Fahrzeuge: "+ carController.getAllCars().size());
         addClassName("reservation-list-view");
         setSizeFull();
         configureGrid(); 
         configureForm();        
-        add(userlistheader, getContent()); 
+        add(carlistheader, getToolbar(), getContent()); 
     }
 
 	
 	private void configureGrid() {
         grid.addClassNames("user-grid");
-        grid.setColumns("name","carBrand", "mileage", "carSeats");   
+        grid.setColumns("name","carBrand", "mileage", "carSeats");  
+        
+        grid.addColumn("carStationEnum").setHeader("Station");
         grid.getColumns().forEach(col -> col.setAutoWidth(true)); 
         grid.setSelectionMode(Grid.SelectionMode.SINGLE);
         grid.setWidth("60%");
         grid.setSizeUndefined();
+        grid.addSelectionListener(e-> { 
+        	if(e.getFirstSelectedItem().isPresent() ) {
+        		selectedItemEvent(e.getFirstSelectedItem().get());
+        	}
+        } );
     }
     
     private void configureForm() {
     	carForm = new CarForm(null); 
     	carForm.setWidth("25em");
+    	carForm.addDetachListener(e-> gridUpdate());
     }
     
     private Component getContent() {
@@ -59,6 +71,14 @@ public class AdministrationCarListView extends VerticalLayout implements AfterNa
         return content;
     }
     
+    private HorizontalLayout getToolbar() {
+        HorizontalLayout toolbar = new HorizontalLayout(); 
+        toolbar.addClassName("toolbar");
+        toolbar.setAlignItems(Alignment.BASELINE);
+        toolbar.add(addCarButton);
+        return toolbar;
+    }
+    
     private void gridUpdate() {
     	grid.setItems(carController.getAllCars() );
 	}
@@ -67,12 +87,28 @@ public class AdministrationCarListView extends VerticalLayout implements AfterNa
     	carForm.setSelectedCar(selectedCar);
     	carForm.setVisible(true);    	
 	}
-
+   
+    private void selectedItemEvent(Car selectedCar) {
+    	if(selectedCar != null) {
+        	carForm.setValues(selectedCar);
+    	}
+    		
+    }
 	@Override
 	public void afterNavigation(AfterNavigationEvent event) {
 		gridUpdate();		
+
+    	addCarButton.addClickListener(e-> addCarButtonEvent());
 		grid.addSelectionListener(e -> e.getFirstSelectedItem().ifPresent(car -> setCarFormData(selectedCar = e.getFirstSelectedItem().get())) );
 		carForm.setCarController(carController);
+		carForm.addClickListener(e-> gridUpdate());
+	}
+	
+	public void addCarButtonEvent() {
+		Car newCar = new Car();
+		carForm.setSelectedCar(newCar);
+		carForm.clearForm();
+		carForm.setVisible(true);
 	}
 	
 }
