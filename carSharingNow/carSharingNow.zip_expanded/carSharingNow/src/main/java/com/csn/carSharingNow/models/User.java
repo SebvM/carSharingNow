@@ -1,7 +1,7 @@
 package com.csn.carSharingNow.models;
 
 import java.util.Date;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -19,8 +19,10 @@ import javax.validation.constraints.Size;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.csn.carSharingNow.security.SecurityConfiguration;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.Getter;
+import lombok.Setter;
 
 /**
  * User Modell
@@ -31,6 +33,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "user")
+@Getter @Setter
 public class User {
 	
 
@@ -51,12 +54,13 @@ public class User {
     @JsonIgnore
     @Size(max = 120)
     private String password;
+    
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinColumns({	
     		@JoinColumn(name="id", referencedColumnName="ID"),
             @JoinColumn(name="rolename", referencedColumnName="role") 
     		})
-	public Set<Role> roles;
+	public List<Role> roles;
     
 	public User() {
 	}
@@ -72,7 +76,7 @@ public class User {
         this.roles = user.getRoles();
     }
 	
-	public User(String username, String email, String password, String firstname, String lastname, Date dateOfBirth, Set<Role> roles ) {
+	public User(String username, String email, String password, String firstname, String lastname, Date dateOfBirth, List<Role>  roles ) {
 		this.username = username;
 		this.firstname = firstname;
 		this.lastname = lastname;
@@ -122,11 +126,11 @@ public class User {
 		this.password = password;
 	}
 
-	public Set<Role> getRoles() {
+	public List<Role> getRoles() {
 		return roles;
 	}
 
-	public void setRoles(Set<Role> roles) {
+	public void setRoles(List<Role>  roles) {
 		this.roles = roles;
 	}
 

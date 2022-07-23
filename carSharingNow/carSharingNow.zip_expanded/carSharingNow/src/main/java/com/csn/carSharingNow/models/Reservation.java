@@ -5,12 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.csn.carSharingNow.repositories.CarRepository;
-
 import java.util.Date;
-import java.util.Optional;
 /**
  * Reservation Modell
  * 

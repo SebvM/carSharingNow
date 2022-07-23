@@ -1,5 +1,7 @@
 package com.csn.carSharingNow.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -27,5 +29,11 @@ public class UserController {
 	
 	public void addUser(User user) {
 		userRepostiory.save(user);			
+	}
+	
+	public List<User> getAllUser() {
+		List<User> users = userRepostiory.findAll();
+		
+		return users;		
 	}
 }
