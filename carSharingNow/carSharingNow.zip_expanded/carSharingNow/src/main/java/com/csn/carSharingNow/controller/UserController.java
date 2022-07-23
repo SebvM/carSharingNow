@@ -8,7 +8,12 @@ import org.springframework.stereotype.Controller;
 import com.csn.carSharingNow.models.User;
 import com.csn.carSharingNow.repositories.UserRepository;
 import com.csn.carSharingNow.security.SecurityService;
-
+/**
+ * User Controller
+ *  
+ * @author Sebastian von Minden
+ *
+ */
 @Controller
 public class UserController {
 
