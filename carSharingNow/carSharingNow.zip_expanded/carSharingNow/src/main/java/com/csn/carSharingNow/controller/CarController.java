@@ -36,9 +36,4 @@ public class CarController {
         List<Car> carList = carRepository.findCarByCarStationEnum(CarStationEnum);
         return carList;
     }
-
-	public void addCar(Car car) {
-		carRepository.save(car);		
-	}
-
 }
