@@ -50,9 +50,6 @@ public class UserControllerTest {
         User testUserUT2 = new User("Herb", "herb@gmx.de", "1234", "Herbert",
                 "Hansen",date,userRoles );
         userController.addUser(testUserUT2);
-        /*User testUserUT3 = new User("Holle", "holle@gmx.de", "1234", "Holger",
-                "Hansen",date,userRoles );
-        userController.addUser(testUserUT3);*/
         List idList = new ArrayList<>();
         for(User user : userController.getAllUser()){
             if(user.getId()==testUserUT2.getId()){
