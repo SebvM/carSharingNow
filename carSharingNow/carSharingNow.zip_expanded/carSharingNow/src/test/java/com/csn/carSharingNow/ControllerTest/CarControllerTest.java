@@ -4,10 +4,13 @@ import com.csn.carSharingNow.controller.CarController;
 import com.csn.carSharingNow.models.Car;
 import com.csn.carSharingNow.models.CarStationEnum;
 import com.csn.carSharingNow.repositories.CarRepository;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,11 +29,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 public class CarControllerTest {
 
-
     @Autowired
     CarController carController;
     @Autowired
     CarRepository carRepository;
+
+
+
 
 
     //UT-1 Test if getAllCars return a list with all Cars
@@ -40,7 +45,7 @@ public class CarControllerTest {
         carController.addCar(testCarUT1);
         List<Car> carListRepository = carRepository.findAll();
         List<Car> carListController = carController.getAllCars();
-        assertEquals(carListController, carListController);
+        assertEquals(carListRepository.size(), carListController.size());
     }
 
     // UT-2 Test getByID delivers expected car

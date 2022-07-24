@@ -41,7 +41,9 @@ public class ReservationController {
         
         return myReservationList;
     }
-    
+    public void addReservation(Reservation reservation){
+        reservationRepository.save(reservation);
+    }
     public void addReservation(Car car, User  user, Date reservationStart, Date reservationEnd) {
         Reservation newReservation = new Reservation(car, user, reservationStart, reservationEnd);       
         reservationRepository.save(newReservation);

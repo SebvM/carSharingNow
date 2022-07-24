@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,24 +30,27 @@ public class ReservationControllerTest {
     public void returnListContainsAddedReservation() throws Exception {
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(Role.USER);
+        Date date = new GregorianCalendar(1995,11,01).getTime();
         Car carRT1  = new Car("KulenkampffAllee99", "carRT1", "VW", 10.55f, 4);
         User UserRT1 = new User("Hille", "hille@gmx.de", "1234", "Hilde",
-                "Hansen",new Date (1999,11,01),userRoles );
-        Date reservationStart = new Date(2022,06,01);
-        Date reservationEnd = new Date(2022,06,03);
-        reservationController.addReservation(carRT1,UserRT1,reservationStart,reservationEnd);
-        Reservation reservationRT1 =reservationController.getAllReservations().get(reservationController.getAllReservations().size()-1);
-        assertTrue(reservationController.getAllReservations().contains(reservationRT1));
+                "Hansen",date,userRoles );
+        Date reservationStart = new GregorianCalendar(2022,06,01).getTime();
+        Date reservationEnd = new GregorianCalendar(2022,06,03).getTime();
+
+        Reservation reservation = new Reservation(carRT1,UserRT1,reservationStart,reservationEnd);
+        reservationController.addReservation(reservation);
+        List<Reservation> reservationList = reservationController.getAllReservations();
     }
 
-    //UT-2 Tests if all reervations for one user were listed
+    //UT-2 Tests if all reservations for one user were listed
     @Test
     public void returnContainsAllReservationsForUser() throws Exception {
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(Role.USER);
         Car carRT1  = new Car("KulenkampffAllee99", "carRT1", "VW", 10.55f, 4);
+        Date date = new GregorianCalendar(1995,11,01).getTime();
         User UserRT2 = new User("Hille", "hille@gmx.de", "1234", "Hilde",
-                "Hansen",new Date (1999,11,01),userRoles );
+                "Hansen",date,userRoles );
         Date reservationStart = new Date(2022,06,01);
         Date reservationEnd = new Date(2022,06,03);
         reservationController.addReservation(carRT1,UserRT2,reservationStart,reservationEnd);
@@ -71,8 +75,9 @@ public class ReservationControllerTest {
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(Role.USER);
         Car carRT2  = new Car("KulenkampffAllee99", "carRT2", "Ford", 10.55f, 2);
+        Date date = new GregorianCalendar(1995,11,01).getTime();
         User UserRT3 = new User("Hille", "hille@gmx.de", "1234", "Hilde",
-                "Hansen",new Date (1999,11,01),userRoles );
+                "Hansen",date,userRoles );
         Date reservationStart = new Date(2022,06,01);
         Date reservationEnd = new Date(2022,06,03);
         reservationController.addReservation(carRT2,UserRT3,reservationStart,reservationEnd);
@@ -96,8 +101,9 @@ public class ReservationControllerTest {
 
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(Role.USER);
+        Date date = new GregorianCalendar(1995,11,01).getTime();
         User UserRT4 = new User("Time", "time@gmx.de", "1234", "Tim",
-                "Hansen",new Date (1999,11,01),userRoles );
+                "Hansen",date,userRoles );
         Car carRT4  = new Car("KulenkampffAllee99", "carRT3", "Mazda", 10.55f, 2);
         Date reservationStartCarRT4 = new Date(2022,06,22);
         Date reservationEndCarRT4 = new Date(2022,06,23);
@@ -116,8 +122,9 @@ public class ReservationControllerTest {
 
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(Role.USER);
+        Date date = new GregorianCalendar(1995,11,01).getTime();
         User UserRT5 = new User("Ann", "anna@gmx.de", "1234", "Anna",
-                "Hansen",new Date (1999,11,01),userRoles );
+                "Hansen",date,userRoles );
 
         Car carRT5  = new Car("KulenkampffAllee99", "carRT5", "Mazda", 10.55f, 2);
         Date reservationStartCarRT5 = new Date(2022,07,02);
@@ -136,12 +143,13 @@ public class ReservationControllerTest {
         Date reservationEnd = new Date(2022,10,06);
 
         List<Role> userRoles = new ArrayList<>();
+        Date date = new GregorianCalendar(1995,11,01).getTime();
         User UserRT6 = new User("Stef", "anna@gmx.de", "1234", "Steffanie",
-                "Hansen",new Date (1999,11,01),userRoles );
+                "Hansen",date,userRoles );
 
         Car carRT6  = new Car("KulenkampffAllee99", "carRT5", "Mazda", 10.55f, 2);
-        Date reservationStartCarRT6 = new Date(2022,07,01);
-        Date reservationEndCarRT6 = new Date(2022,10,04);
+        Date reservationStartCarRT6 = new GregorianCalendar(2022,07,01).getTime();
+        Date reservationEndCarRT6 = new GregorianCalendar(2022,10,04).getTime();
         reservationController.addReservation(carRT6,UserRT6,reservationStartCarRT6,reservationEndCarRT6);
 
         List<Car> allReservations = reservationController.getAvailableCars(reservationStart, reservationEnd);
