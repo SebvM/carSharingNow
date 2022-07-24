@@ -10,9 +10,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Controller
@@ -22,7 +24,7 @@ public class ReservationController {
     ReservationRepository reservationRepository;
     @Autowired
     CarRepository carRepository;
-
+    
 
     public List<Reservation>  getAllReservations() {
         List<Reservation> reservationList = reservationRepository.findAll();
@@ -41,10 +43,8 @@ public class ReservationController {
         
         return myReservationList;
     }
-    public void addReservation(Reservation reservation){
-        reservationRepository.save(reservation);
-    }
-    public void addReservation(Car car, User  user, Date reservationStart, Date reservationEnd) {
+    
+    public void addReservation(Car car, User  user, Timestamp reservationStart, Timestamp reservationEnd) {
         Reservation newReservation = new Reservation(car, user, reservationStart, reservationEnd);       
         reservationRepository.save(newReservation);
     }
@@ -58,25 +58,28 @@ public class ReservationController {
         return reservationRepository.findById(id);
     }
 
-    public List<Car> getAvailableCars(Date reservationStart, Date reservationEnd) {
+    public List<Car> getAvailableCars(Timestamp reservationStart, Timestamp reservationEnd) {
 
         List<Car> availableCarList = carRepository.findAll();
         List<Reservation> allReservationsList = reservationRepository.findAll();
-
+        List<Reservation> reservationsWithinSelectedTimeframeList = new ArrayList<>(); 
+        
         for (Reservation reservation : allReservationsList) {
-            if ((reservationStart.after(reservation.getReservationEnd()))
-                    && reservationEnd.before(reservation.getReservationStart())) {
-            	availableCarList.remove(reservation.getCar());
-            }else if ((reservationEnd.after(reservation.getReservationStart()))
-                    && reservationEnd.before(reservation.getReservationEnd())) {
-            	availableCarList.remove(reservation.getCar());
-            }else if ((reservationStart.after(reservation.getReservationStart()))
-                    && reservationStart.before(reservation.getReservationEnd())) {
-            	availableCarList.remove(reservation.getCar());
-            }else if ((reservationStart.before(reservation.getReservationStart()))
-                    && reservationEnd.after(reservation.getReservationEnd())) {
-            	availableCarList.remove(reservation.getCar());
-            }
+        	if (reservationEnd.after(reservation.getReservationStart())&&reservationEnd.before(reservation.getReservationEnd())) {
+        		reservationsWithinSelectedTimeframeList.add(reservation);
+            }else if (reservationStart.after(reservation.getReservationStart()) && reservationStart.before(reservation.getReservationEnd())) {           
+            	reservationsWithinSelectedTimeframeList.add(reservation);
+            }else if (reservationStart.before(reservation.getReservationStart()) && reservationEnd.after(reservation.getReservationEnd())) {
+            	reservationsWithinSelectedTimeframeList.add(reservation);
+            } 
+        }
+        
+        for(Reservation res : reservationsWithinSelectedTimeframeList) {
+        	for(Car car : availableCarList) {
+        		if(car.getId() ==res.getCar().getId()) {
+        			availableCarList.remove(car);
+        		}
+        	}
         }
         
         

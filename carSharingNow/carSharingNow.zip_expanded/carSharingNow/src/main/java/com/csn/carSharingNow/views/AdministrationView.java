@@ -13,6 +13,12 @@ import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+/**
+ * Adminboard führt Fahrzeugübersicht (AdministrationCarListView) und Nutzerübersicht (AdministrationUserListView) zusammen
+ * 
+ * @author Sebastian von Minden
+ *
+ */
 
 @SuppressWarnings("serial")
 @Route(value = "administration", layout=MainLayout.class)

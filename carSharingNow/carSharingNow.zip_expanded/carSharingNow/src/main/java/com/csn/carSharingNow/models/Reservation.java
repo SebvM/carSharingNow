@@ -5,7 +5,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-import java.util.Date;
+import java.sql.Timestamp;
 /**
  * Reservation Modell
  * 
@@ -31,15 +31,15 @@ public class Reservation {
     @ManyToOne
     @JoinColumn(name = "car_ID")
     private Car car;
-    private Date reservationStart;
-    private Date reservationEnd;
+    private Timestamp reservationStart;
+    private Timestamp reservationEnd;
     
     @Transient
     private String carName;    
     
     public Reservation() {
     }       
-    public Reservation(Car car, User user, Date reservationStart, Date reservationEnd){
+    public Reservation(Car car, User user, Timestamp reservationStart, Timestamp reservationEnd){
         this.car = car;
         this.user = user;
         this.reservationStart = reservationStart;

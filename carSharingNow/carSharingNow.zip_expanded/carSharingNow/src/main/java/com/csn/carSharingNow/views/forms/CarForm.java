@@ -87,7 +87,6 @@ public class CarForm extends FormLayout implements AfterNavigationObserver {
 			selectedCar.setCarStationEnum(carStation.getValue());
 			
 			carController.addCar(selectedCar);
-			clearForm();
 			
 			this.setVisible(false);
 		}

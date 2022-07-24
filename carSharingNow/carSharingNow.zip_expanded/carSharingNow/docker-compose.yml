@@ -4,6 +4,8 @@ services:
   database:
     image: mysql:8
     container_name: carSharingNowDB
+    ports:
+      - 3306:3306 
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: cSnDB
@@ -12,19 +14,18 @@ services:
       LANG: de_DE.UTF-8
     volumes:
      - dockerCSNDatabaseVolume:/var/lib/mysql
-
-      
+    
   springapi:
     image: openjdk
     container_name: carSharingNowSys
     ports:
-      - 8443:8443
+      - 8443:8443   
     depends_on:
       - database
+    restart: on-failure
     volumes:
       - ./target/carSharingNow-0.0.1-SNAPSHOT.jar:/app.jar
-    command: ["java", "-jar", "app.jar"]    
- 
+    command: ["java", "-jar", "app.jar"]  
 volumes:
   dockerCSNDatabaseVolume:   
 

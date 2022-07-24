@@ -1,5 +1,7 @@
 package com.csn.carSharingNow.views.forms;
 
+import java.util.Locale;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.csn.carSharingNow.controller.UserController;
@@ -40,12 +42,13 @@ public class UserForm extends FormLayout implements AfterNavigationObserver {
 	
 	private Button save = new Button("Speichern");
 	private Button close = new Button("Zurück"); 
-	  
+
+	Locale germanLocale = new Locale("de", "DE");
 	public UserForm(User selectedUser) {
 		this.selectedUser = selectedUser;  
 		addClassName("user-form"); 
 		username.setReadOnly(true);
-		
+		dateOfBirth.setLocale(germanLocale);
 		add(carFormHeader,
 			username,
 			firstname,

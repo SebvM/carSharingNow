@@ -69,8 +69,7 @@ public class MainLayout extends AppLayout {
 	        addToNavbar(header);	 
 	    }
 	    
-	    private void createDrawer(SecurityService securityService) {
-	    	if (securityService.get().isPresent() && securityService.get().get().getRoles().contains(Role.USER)) {	    		
+	    private void createDrawer(SecurityService securityService) {	    		
 	    		username = securityService.get().get().getUsername();
 	    		//Benutzer Account Menüpunkt
 	    		RouterLink accountDataLink = new RouterLink("Benutzerdaten: " + username, UserDataView.class ); 
@@ -78,14 +77,16 @@ public class MainLayout extends AppLayout {
 	    		accountDataLink.setHighlightCondition(HighlightConditions.sameLocation()); 
 	    		RouterLink reservationDataLink = new RouterLink("Meine Reservierungen", ReservationListView.class); 
 	    		reservationDataLink.setHighlightCondition(HighlightConditions.sameLocation()); 
-
+	    		if (securityService.get().isPresent() && securityService.get().get().getRoles().contains(Role.ADMIN)) {
+	    			addToDrawer(new VerticalLayout( 
+		    				accountDataLink
+		    				));
+	    		}else {
 	    			addToDrawer(new VerticalLayout( 
 		    				accountDataLink,
 		    				reservationDataLink
 		    				));
-	    		
-	    	
-	    	}
+	    		}	    			
 	    }
 	    
 }

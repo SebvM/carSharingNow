@@ -28,11 +28,18 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    SecurityService securityService;
+    
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByUsername(username);
-        if (user == null) {
-            throw new UsernameNotFoundException("No user present with username: " + username);
+        List<User> users = userRepository.findAll();
+        if (user == null && users.size() != 0) {         	
+           throw new UsernameNotFoundException("No user present with username: " + username);
+        }else if (user == null && users.size() == 0) {
+        	securityService.getFirstTimeUser();
+        	throw new UsernameNotFoundException("No users exist default admin account has been created.");
         } else {
             return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
                     getAuthorities(user));
