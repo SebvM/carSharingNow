@@ -32,12 +32,12 @@ public class ReservationControllerTest {
     public void returnListContainsAddedReservation() throws Exception {
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(Role.USER);
-        Date date = new GregorianCalendar(1995,11,01).getTime();
+        Date date = new GregorianCalendar(1994,11,01).getTime();
         Car carRT1  = new Car("KulenkampffAllee99", "carRT1", "VW", 10.55f, 4);
-        User UserRT1 = new User("Torb", "Thorsten@gmx.de", "1234", "Thorsten",
+        User UserRT1 = new User("Torb", "Thorsten.tor@gmx.de", "1234", "Thorsten",
                 "Hansen",date,userRoles );
-        Timestamp reservationStart =  Timestamp.valueOf("2022-06-01 10:10:10.0");
-        Timestamp reservationEnd =  Timestamp.valueOf("2022-06-03 10:10:10.0");
+        Timestamp reservationStart =  Timestamp.valueOf("2022-01-01 10:10:10.0");
+        Timestamp reservationEnd =  Timestamp.valueOf("2022-01-03 10:10:10.0");
         Reservation reservation = new Reservation(carRT1,UserRT1,reservationStart,reservationEnd);
         reservationController.addReservation(reservation);
 
@@ -68,17 +68,17 @@ public class ReservationControllerTest {
     @Test
     public void returnListContainsAllAvailableCars() throws Exception {
 
-        Timestamp reservationStart =  Timestamp.valueOf("2022-06-01 10:10:10.0");
-        Timestamp reservationEnd =  Timestamp.valueOf("2022-06-03 10:10:10.0");
+        Timestamp reservationStart =  Timestamp.valueOf("2022-02-01 10:10:10.0");
+        Timestamp reservationEnd =  Timestamp.valueOf("2022-02-03 10:10:10.0");
 
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(Role.USER);
         Date date = new GregorianCalendar(1995,11,01).getTime();
-        User UserRT4 = new User("Time", "time@gmx.de", "1234", "Tim",
+        User UserRT4 = new User("Time", "tim.tim@gmx.de", "1234", "Tim",
                 "Hansen",date,userRoles );
         Car carRT4  = new Car("KulenkampffAllee99", "carRT3", "Mazda", 10.55f, 2);
-        Timestamp reservationStartCar =  Timestamp.valueOf("2022-06-21 10:10:10.0");
-        Timestamp reservationEndCar =  Timestamp.valueOf("2022-06-23 10:10:10.0");
+        Timestamp reservationStartCar =  Timestamp.valueOf("2022-02-21 10:10:10.0");
+        Timestamp reservationEndCar =  Timestamp.valueOf("2022-02-23 10:10:10.0");
         Reservation reservation = new Reservation(carRT4, UserRT4, reservationStartCar, reservationEndCar);
         reservationController.addReservation(reservation);
 
@@ -96,18 +96,18 @@ public class ReservationControllerTest {
     @Test
     public void returnNotContainsCarWithOverlappingStart() throws Exception {
 
-        Timestamp reservationStart =  Timestamp.valueOf("2022-07-01 10:10:10.0");
-        Timestamp reservationEnd =  Timestamp.valueOf("2022-07-03 10:10:10.0");
+        Timestamp reservationStart =  Timestamp.valueOf("2022-12-01 10:10:10.0");
+        Timestamp reservationEnd =  Timestamp.valueOf("2022-12-03 10:10:10.0");
 
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(Role.USER);
         Date date = new GregorianCalendar(1995,11,01).getTime();
-        User UserRT5 = new User("Ann", "anna@gmx.de", "1234", "Anna",
+        User UserRT5 = new User("Ann", "anna.anna@gmx.de", "1234", "Anna",
                 "Hansen",date,userRoles );
 
         Car carRT5  = new Car("KulenkampffAllee99", "carRT5", "Mazda", 10.55f, 2);
-        Timestamp reservationStartCar =  Timestamp.valueOf("2022-07-02 10:10:10.0");
-        Timestamp reservationEndCar =  Timestamp.valueOf("2022-07-23 10:10:10.0");
+        Timestamp reservationStartCar =  Timestamp.valueOf("2022-12-02 10:10:10.0");
+        Timestamp reservationEndCar =  Timestamp.valueOf("2022-12-23 10:10:10.0");
         Reservation reservation = new Reservation(carRT5, UserRT5, reservationStartCar, reservationEndCar);
         reservationController.addReservation(reservation);
         List<Car> availableCars = new ArrayList<>();
@@ -134,7 +134,7 @@ public class ReservationControllerTest {
 
         List<Role> userRoles = new ArrayList<>();
         Date date = new GregorianCalendar(1995,11,01).getTime();
-        User UserRT6 = new User("rolle", "rolf@gmx.de", "1234", "Rolf",
+        User UserRT6 = new User("rolle", "rolf.rolf@gmx.de", "1234", "Rolf",
                 "Hansen",date,userRoles );
 
         Car carRT6  = new Car("KulenkampffAllee99", "carRT6", "Mazda", 10.55f, 2);

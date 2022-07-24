@@ -30,7 +30,7 @@ public class UserControllerTest {
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(Role.USER);
         Date date = new GregorianCalendar(1995,11,01).getTime();
-        User testUserUT1 = new User("Hille", "hille@gmx.de", "1234", "Hilde",
+        User testUserUT1 = new User("Lisa", "lisa@gmx.de", "1234", "Lisa",
                 "Hansen",date,userRoles );
         userController.addUser(testUserUT1);
         assertEquals(testUserUT1.getUsername(), userRepository.findByUsername(testUserUT1.getUsername()).getUsername());
@@ -47,7 +47,7 @@ public class UserControllerTest {
         List<Role> userRoles = new ArrayList<>();
         userRoles.add(Role.USER);
         Date date = new GregorianCalendar(1995,11,01).getTime();
-        User testUserUT2 = new User("Herb", "herb@gmx.de", "1234", "Herbert",
+        User testUserUT2 = new User("Hannes", "hannes@gmx.de", "1234", "Hannes",
                 "Hansen",date,userRoles );
         userController.addUser(testUserUT2);
         List idList = new ArrayList<>();

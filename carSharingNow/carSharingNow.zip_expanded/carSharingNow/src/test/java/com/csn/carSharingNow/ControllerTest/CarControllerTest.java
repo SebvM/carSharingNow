@@ -34,51 +34,51 @@ public class CarControllerTest {
 
 
 
-    //UT-1 Test if getAllCars return a list with all Cars
+    //CT-1 Test if getAllCars return a list with all Cars
     @Test
     public void returnContainsListNotEmpty() throws Exception {
-        Car testCarUT1  = new Car("GustavHeinemannBuergerhaus60", "carUT-1", "VW", 10.55f, 4);
+        Car testCarUT1  = new Car("GustavHeinemannBuergerhaus60", "carCT-1", "VW", 10.55f, 4);
         carController.addCar(testCarUT1);
         List<Car> carListRepository = carRepository.findAll();
         List<Car> carListController = carController.getAllCars();
         assertEquals(carListRepository.size(), carListController.size());
     }
 
-    // UT-2 Test getByID delivers expected car
+    // CT-2 Test getByID delivers expected car
     @Test
     public void returnContainsExpectedID() throws Exception {
-        Car testCarUT2 = new Car("GustavHeinemannBuergerhaus60", "carUT-2", "VW", 10.55f, 4);
+        Car testCarUT2 = new Car("GustavHeinemannBuergerhaus60", "carCT-2", "VW", 10.55f, 4);
         carController.addCar(testCarUT2);
-        assertTrue(carController.getCarById(testCarUT2.getId()).getName().equals("carUT-2"));
+        assertTrue(carController.getCarById(testCarUT2.getId()).getName().equals("carCT-2"));
     }
 
-    //UT-3 Test getByID does not delivers  expected car
+    //CT-3 Test getByID does not delivers  expected car
     @Test
     public void returnDoesNotContainExpectedID() throws Exception {
-        Car testCarUT3 = new Car("GustavHeinemannBuergerhaus60", "carUT-3", "VW", 10.55f, 4);
-        Car testCar2UT3 = new Car("GustavHeinemannBuergerhaus60", "car2UT-3", "VW", 10.55f, 4);
+        Car testCarUT3 = new Car("GustavHeinemannBuergerhaus60", "carCT-3", "VW", 10.55f, 4);
+        Car testCar2UT3 = new Car("GustavHeinemannBuergerhaus60", "car2CT-3", "VW", 10.55f, 4);
         carController.addCar(testCarUT3);
         carController.addCar(testCar2UT3);
         int carID = testCar2UT3.getId();
-        assertFalse(carController.getCarById(carID).getName().equals("carUT-3"));
+        assertFalse(carController.getCarById(carID).getName().equals("carCT-3"));
     }
 
-    //UT-4 Test car added as expected
+    //CT-4 Test car added as expected
     @Test
     public void returnContainsAddedCar() throws Exception {
-        Car testCarUT4 = new Car("GustavHeinemannBuergerhaus60", "carUT-4", "BMW", 10.55f, 2);
+        Car testCarUT4 = new Car("GustavHeinemannBuergerhaus60", "carCT-4", "BMW", 10.55f, 2);
         carController.addCar(testCarUT4);
         int carID = testCarUT4.getId();
-        assertTrue(carController.getCarById(carID).getName().equals("carUT-4"));
+        assertTrue(carController.getCarById(carID).getName().equals("carCT-4"));
         assertTrue(carController.getCarById(carID).getCarBrand().equals("BMW"));
         assertEquals(carController.getCarById(carID).getMileage(), 10.55f);
         assertEquals(carController.getCarById(carID).getCarSeats(), 2);
     }
 
-    //UT-5 Test addCar does not add a false Car
+    //CT-5 Test addCar does not add a false Car
     @Test
     public void returnDoesNotContainAddedCar() throws Exception {
-        Car testCarUT5 = new Car("GustavHeinemannBuergerhaus60", "carUT-5", "BMW", 10.55f, 2);
+        Car testCarUT5 = new Car("GustavHeinemannBuergerhaus60", "carCT-5", "BMW", 10.55f, 2);
         carController.addCar(testCarUT5);
         int carID = testCarUT5.getId();
         assertFalse(carController.getCarById(carID).getName().equals("testCarAddedFalse"));
@@ -88,7 +88,7 @@ public class CarControllerTest {
         assertNotEquals(carController.getCarById(carID).getCarSeats(), 4);
     }
 
-    //UT-6 Tests if findCarByCarStationEnum returns all enum referenced by the argument
+    //CT-6 Tests if findCarByCarStationEnum returns all enum referenced by the argument
     @Test
     public void returnContainsStationList() throws Exception {
         List<Car> carListFindByCarStationEnum = carRepository.findCarByCarStationEnum(CarStationEnum.valueOf("HanoverscheStrasse12"));
@@ -106,11 +106,11 @@ public class CarControllerTest {
             assertEquals(carListFindByCarStationEnum.get(i).getCarStationEnum(), (carListFindByCarStationEnum.get(i).getCarStationEnum()));
         }
     }
-    // UT-7 Tests if findCarByCarStationEnum return has not the correct size
+    // CT-7 Tests if findCarByCarStationEnum return has not the correct size
     @Test
     public void returnSizeNotMatch() throws Exception {
         List<Car> carListFindByCarStationEnum = carRepository.findCarByCarStationEnum(CarStationEnum.valueOf("HanoverscheStrasse12"));
-        Car testCarUT7 = new Car("HanoverscheStrasse12", "carUT-7", "BMW", 10.55f, 2);
+        Car testCarUT7 = new Car("HanoverscheStrasse12", "carCT-7", "BMW", 10.55f, 2);
         carController.addCar(testCarUT7);
         List<Car> carListAddedByLoop = new ArrayList<>();
         List<Car> allCars= carController.getAllCars();
@@ -127,10 +127,10 @@ public class CarControllerTest {
         }
     }
 
-    //UT-8 Test car removed as expected
+    //CT-8 Test car removed as expected
     @Test
     public void returnContainsRemovedCar() throws Exception {
-        Car testCarUT7 = new Car("HanoverscheStrasse12", "carUT-8", "BMW", 10.55f, 2);
+        Car testCarUT7 = new Car("HanoverscheStrasse12", "carCT-8", "BMW", 10.55f, 2);
         carController.addCar(testCarUT7);
         int oldCarId =carRepository.findAll().size();
         carController.removeCar(carRepository.findAll().size());
