@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 @Controller
@@ -23,7 +24,7 @@ public class ReservationController {
     ReservationRepository reservationRepository;
     @Autowired
     CarRepository carRepository;
-
+    
 
     public List<Reservation>  getAllReservations() {
         List<Reservation> reservationList = reservationRepository.findAll();

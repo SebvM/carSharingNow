@@ -5,6 +5,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 import javax.annotation.security.PermitAll;
@@ -59,7 +60,8 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
     ReservationForm resForm;
     List<Car> availableCars = new ArrayList<Car>();
     H2 errorHeader = new H2();
-    
+
+    Locale germanLocale = new Locale("de", "DE");
     public ReservationListView() {
         addClassName("reservation-list-view");
         setSizeFull();
@@ -95,7 +97,9 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
         startTime.setHelperText("Start muss vor Ende sein.");
         startTime.setStep(Duration.ofMinutes(15));
         startTime.setMin(LocalDateTime.now());
+        startTime.setLocale(germanLocale);
         endTime.setHelperText("Ende muss nach Start sein.");
+        endTime.setLocale(germanLocale);
         addReservationButton.setEnabled(false);
         HorizontalLayout toolbar = new HorizontalLayout(startTime, endTime, carCombo, addReservationButton); 
         VerticalLayout toolbarStack = new VerticalLayout(errorHeader,toolbar);
