@@ -1,9 +1,9 @@
 package com.csn.carSharingNow.views.listen;
 
+import java.sql.Timestamp;
 import java.time.Duration;
-import java.time.ZoneId;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Set;
 
@@ -23,6 +23,7 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.datetimepicker.DateTimePicker;
 import com.vaadin.flow.component.grid.Grid;
+import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.AfterNavigationEvent;
@@ -57,6 +58,7 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
     Reservation selectedReservation;
     ReservationForm resForm;
     List<Car> availableCars = new ArrayList<Car>();
+    H2 errorHeader = new H2();
     
     public ReservationListView() {
         addClassName("reservation-list-view");
@@ -87,17 +89,19 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
         resForm.setWidth("25em");
     }
     
-    private HorizontalLayout getToolbar() {
+    private VerticalLayout getToolbar() {
         endTime.setReadOnly(true);
         carCombo.setReadOnly(true);         
         startTime.setHelperText("Start muss vor Ende sein.");
         startTime.setStep(Duration.ofMinutes(15));
+        startTime.setMin(LocalDateTime.now());
         endTime.setHelperText("Ende muss nach Start sein.");
         addReservationButton.setEnabled(false);
         HorizontalLayout toolbar = new HorizontalLayout(startTime, endTime, carCombo, addReservationButton); 
+        VerticalLayout toolbarStack = new VerticalLayout(errorHeader,toolbar);
         toolbar.addClassName("toolbar");
         toolbar.setAlignItems(Alignment.BASELINE);
-        return toolbar;
+        return toolbarStack;
     }
 
 	
@@ -128,10 +132,14 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 	private void endDateSelected() {
 		if(!endTime.isEmpty() && endTime.getValue().isAfter(startTime.getValue())) {
 			carCombo.setReadOnly(false);
-			availableCars = reservationController.getAvailableCars(Date.from(startTime.getValue().atZone(ZoneId.systemDefault()).toInstant()), Date.from(endTime.getValue().atZone(ZoneId.systemDefault()).toInstant()));
+			availableCars = reservationController.getAvailableCars(Timestamp.valueOf(startTime.getValue()), Timestamp.valueOf(endTime.getValue()));
+			if(availableCars.size() == 0) {
+				errorHeader.setText("Keine Fahrzeuge für den Zeitraum verfügbar");				
+			}else {
+				errorHeader.setText("");
+			}
+			
 			carCombo.setItems(availableCars);
-			availableCars.forEach(c -> System.out.println(c.toString()));
-			System.out.println();
 		}else {
 			availableCars = new ArrayList<Car>();
 			endTime.setValue(null);
@@ -145,10 +153,8 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 		}
 	}
 	private void addReservationButtonClicked() {
-		Date startDate = Date.from(startTime.getValue().atZone(ZoneId.systemDefault()).toInstant());
-		Date endDate = Date.from(endTime.getValue().atZone(ZoneId.systemDefault()).toInstant());
 		Car selectedCar = carCombo.getValue();		
-		reservationController.addReservation(selectedCar, securityService.get().get(), startDate, endDate);		
+		reservationController.addReservation(selectedCar, securityService.get().get(),Timestamp.valueOf(startTime.getValue()) , Timestamp.valueOf(endTime.getValue()));		
 		availableCars = new ArrayList<Car>();
 		carCombo.setItems(availableCars);
 		carCombo.setReadOnly(true);
