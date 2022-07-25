@@ -9,6 +9,7 @@ import java.util.Locale;
 import java.util.Set;
 
 import javax.annotation.security.PermitAll;
+import javax.annotation.security.RolesAllowed;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -41,7 +42,7 @@ import com.vaadin.flow.router.Route;
 
 @SuppressWarnings("serial")
 @Route(value = "myReservations", layout=MainLayout.class)
-@PermitAll
+@RolesAllowed("user")
 @PageTitle("Reservierungen | car Sharing Now")
 public class ReservationListView extends VerticalLayout implements AfterNavigationObserver { 
 	@Autowired
