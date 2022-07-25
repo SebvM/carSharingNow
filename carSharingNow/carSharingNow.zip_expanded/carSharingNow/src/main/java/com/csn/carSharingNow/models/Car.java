@@ -7,20 +7,18 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "car")
-@Getter
-@Setter
+@Getter @Setter
 public class Car {
 	
     @Id
-    @TableGenerator(name = "tabgenerator", allocationSize = 1,initialValue= -1)
-    @GeneratedValue(strategy = GenerationType.TABLE, generator = "tabgenerator" )
+    @GeneratedValue(strategy = GenerationType.IDENTITY )
     private int id;
     private String name;
     private String carBrand;
     private float mileage;
     private int carSeats;
-
-
+    
+   
     private CarStationEnum carStationEnum;
 
 

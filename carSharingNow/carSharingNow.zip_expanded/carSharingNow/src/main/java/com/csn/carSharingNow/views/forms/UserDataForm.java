@@ -3,6 +3,7 @@ package com.csn.carSharingNow.views.forms;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.Locale;
 import java.util.stream.Stream;
 
 import javax.annotation.PostConstruct;
@@ -55,7 +56,8 @@ public class UserDataForm extends FormLayout  {
 	   SecurityService securityService;
 	   @Autowired 
 	   UserController userController;
-	   
+
+		Locale germanLocale = new Locale("de", "DE");
 	   public UserDataForm(	) {	
 
 		 
@@ -67,6 +69,7 @@ public class UserDataForm extends FormLayout  {
 	       lastname = new TextField("Nachname");
 	       email = new EmailField("Email");
 	       dateOfBirth = new DatePicker("Geburtsdatum");
+		   dateOfBirth.setLocale(germanLocale);
 	       
 	       adminRole = new Checkbox("Erstelle Admin Account");
 	       adminRole.getStyle().set("margin-top", "10px");

@@ -17,6 +17,7 @@ import com.csn.carSharingNow.controller.CarController;
 import com.csn.carSharingNow.controller.ReservationController;
 import com.csn.carSharingNow.models.Car;
 import com.csn.carSharingNow.models.Reservation;
+import com.csn.carSharingNow.models.User;
 import com.csn.carSharingNow.security.SecurityService;
 import com.csn.carSharingNow.views.MainLayout;
 import com.csn.carSharingNow.views.forms.ReservationForm;
@@ -158,9 +159,12 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
 		}
 	}
 	private void addReservationButtonClicked() {
-		Car selectedCar = carCombo.getValue();		
-		reservationController.addReservation(selectedCar, securityService.get().get(),Timestamp.valueOf(startTime.getValue()) , Timestamp.valueOf(endTime.getValue()));		
+		Car selectedCar = carController.getCarById(carCombo.getValue().getId());		
+		User currentUser =  securityService.get().get();
+		Reservation res = new Reservation(selectedCar,currentUser,Timestamp.valueOf(startTime.getValue()) , Timestamp.valueOf(endTime.getValue()));
+		reservationController.addReservation(res);
 		availableCars = new ArrayList<Car>();
+		
 		carCombo.setItems(availableCars);
 		carCombo.setReadOnly(true);
 		endTime.setValue(null);

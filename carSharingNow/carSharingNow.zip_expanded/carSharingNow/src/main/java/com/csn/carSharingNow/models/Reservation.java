@@ -24,11 +24,11 @@ public class Reservation {
     
     private boolean canceled=false;
     
-    @ManyToOne (cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "user_ID")
     private User user;    
     
-    @ManyToOne (cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "car_ID")
     private Car car;
     private Timestamp reservationStart;
