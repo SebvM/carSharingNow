@@ -12,7 +12,8 @@ import javax.persistence.*;
 public class Car {
 	
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY )
+    @TableGenerator(name = "tabgenerator", allocationSize = 1,initialValue= -1)
+    @GeneratedValue(strategy = GenerationType.TABLE, generator = "tabgenerator" )
     private int id;
     private String name;
     private String carBrand;
@@ -25,7 +26,7 @@ public class Car {
 
     public Car(){
     }
-    public Car(String carStationEnum, String name,String carBrand, float mileage, int carSeats) { //CarStation carStation
+    public Car(String carStationEnum, String name,String carBrand, float mileage, int carSeats) {
         this.carStationEnum= CarStationEnum.valueOf(carStationEnum);
         this.name = name;
         this.carBrand = carBrand;
