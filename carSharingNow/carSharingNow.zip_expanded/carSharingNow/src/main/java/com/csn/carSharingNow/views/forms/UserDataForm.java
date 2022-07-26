@@ -16,7 +16,6 @@ import com.csn.carSharingNow.security.SecurityService;
 import com.vaadin.flow.component.HasValueAndElement;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
-import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.datepicker.DatePicker;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.html.H3;
@@ -46,7 +45,6 @@ public class UserDataForm extends FormLayout  {
 	   private PasswordField password;
 	   private PasswordField passwordConfirm;
 
-	   private Checkbox adminRole;
 
 	   private Span errorMessageField;
 
@@ -71,8 +69,6 @@ public class UserDataForm extends FormLayout  {
 	       dateOfBirth = new DatePicker("Geburtsdatum");
 		   dateOfBirth.setLocale(germanLocale);
 	       
-	       adminRole = new Checkbox("Erstelle Admin Account");
-	       adminRole.getStyle().set("margin-top", "10px");
 
 	       password = new PasswordField("Passwort");
 	       passwordConfirm = new PasswordField("Passwort bestätigen");
@@ -101,7 +97,7 @@ public class UserDataForm extends FormLayout  {
 	       LocalDate defaultdate = LocalDate.of(1978, 11, 19);;
 	       dateOfBirth.setValue(defaultdate);
 	       add(title, username, firstname, lastname, dateOfBirth, email, password,
-	               passwordConfirm, adminRole, errorMessageField,
+	               passwordConfirm, errorMessageField,
 	               submitButton);
 
 	       // Max width fürs Form
@@ -144,7 +140,6 @@ public class UserDataForm extends FormLayout  {
 	   public TextField getLastnameField() { return lastname; }
 	   public DatePicker getDateOfBirthField() { return dateOfBirth; }
 	   public EmailField getEmailField() { return email; }
-	   public Checkbox getAdminRole() { return adminRole; }
 
 
 	   public void setPasswordField(String password) { this.password.setValue(password); }
