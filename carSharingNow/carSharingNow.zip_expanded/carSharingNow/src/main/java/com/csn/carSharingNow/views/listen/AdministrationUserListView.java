@@ -15,7 +15,12 @@ import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.AfterNavigationEvent;
 import com.vaadin.flow.router.AfterNavigationObserver;
-
+/**
+ * ListView für die Nutzeranzeige im Adminboard
+ * 
+ * @author Sebastian von Minden
+ *
+ */
 @SuppressWarnings("serial")
 @RolesAllowed("admin")
 public class AdministrationUserListView extends VerticalLayout implements AfterNavigationObserver {

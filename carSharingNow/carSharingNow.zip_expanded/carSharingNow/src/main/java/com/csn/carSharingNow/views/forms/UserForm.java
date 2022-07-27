@@ -21,7 +21,12 @@ import com.vaadin.flow.router.AfterNavigationObserver;
 
 import lombok.Getter;
 import lombok.Setter;
-
+/**
+ * Formular zur anzeige und ändern von userdaten im adminboard
+ * 
+ * @author Sebastian von Minden
+ *
+ */
 @SuppressWarnings("serial")
 @Getter @Setter
 public class UserForm extends FormLayout implements AfterNavigationObserver {	

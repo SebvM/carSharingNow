@@ -19,6 +19,13 @@ import com.vaadin.flow.router.AfterNavigationObserver;
 
 import lombok.Getter;
 import lombok.Setter;
+/**
+ * Formular zur anzeige und eingabe von fahrzeugdaten
+ * 
+ * @author Sebastian von Minden
+ *
+ */
+
 
 @SuppressWarnings("serial")
 @Getter @Setter

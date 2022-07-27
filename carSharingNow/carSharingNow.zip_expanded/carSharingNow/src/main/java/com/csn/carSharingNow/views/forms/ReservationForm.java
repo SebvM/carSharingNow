@@ -19,7 +19,12 @@ import java.time.ZoneId;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
-
+/**
+ * Formular zur anzeige und eingabe von reservierungsdaten
+ * 
+ * @author Sebastian von Minden
+ *
+ */
 @SuppressWarnings("serial")
 @Getter @Setter
 public class ReservationForm extends FormLayout implements AfterNavigationObserver{   
