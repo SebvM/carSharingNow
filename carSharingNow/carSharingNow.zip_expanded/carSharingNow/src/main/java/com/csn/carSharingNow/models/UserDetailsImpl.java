@@ -10,7 +10,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 /**
  * User Modell welches die UserDetails der Spring Security 
- * ersetzt damit wir diese in der DB speichern können und uns damit Anmelden.
+ * ersetzt damit wir diese in der DB speichern und uns damit Anmelden können.
  * 
  * @author Sebastian von Minden
  *

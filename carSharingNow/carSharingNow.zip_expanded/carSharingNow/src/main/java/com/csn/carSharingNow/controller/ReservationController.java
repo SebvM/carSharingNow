@@ -71,6 +71,8 @@ public class ReservationController {
             	reservationsWithinSelectedTimeframeList.add(reservation);
             }else if (reservationStart.before(reservation.getReservationStart()) && reservationEnd.after(reservation.getReservationEnd())) {
             	reservationsWithinSelectedTimeframeList.add(reservation);
+            }  if (reservationStart.equals(reservation.getReservationStart()) || reservationEnd.equals(reservation.getReservationEnd())) {
+            	reservationsWithinSelectedTimeframeList.add(reservation);
             } 
         }
         
