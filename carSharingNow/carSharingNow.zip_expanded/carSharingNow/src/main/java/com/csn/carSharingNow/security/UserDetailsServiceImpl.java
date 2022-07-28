@@ -36,10 +36,10 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         User user = userRepository.findByUsername(username);
         List<User> users = userRepository.findAll();
         if (user == null && users.size() != 0) {         	
-           throw new UsernameNotFoundException("No user present with username: " + username);
+           throw new UsernameNotFoundException("Kein Nutzer mit dem Angegebenen Benutzernamen gefunden: " + username);
         }else if (user == null && users.size() == 0) {
         	securityService.getFirstTimeUser();
-        	throw new UsernameNotFoundException("No users exist default admin account has been created.");
+        	throw new UsernameNotFoundException("Es gibt keine Benutzer, das Standard-Administratorkonto wurde erstellt.");
         } else {
             return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
                     getAuthorities(user));
@@ -49,7 +49,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private static List<GrantedAuthority> getAuthorities(User user) {
         return user.getRoles().stream().map(role -> new SimpleGrantedAuthority("ROLE_" + role.getRoleName()))
                 .collect(Collectors.toList());
-
     }
 
 }

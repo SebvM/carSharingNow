@@ -8,7 +8,5 @@ import java.util.List;
 
 public interface CarRepository extends JpaRepository<Car, Integer > {
     Car findCarById(int id);
-
     List<Car> findCarByCarStationEnum(CarStationEnum carStationEnum);
-
 }

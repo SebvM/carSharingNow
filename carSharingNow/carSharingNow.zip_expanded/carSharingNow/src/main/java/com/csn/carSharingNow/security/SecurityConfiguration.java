@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.oauth2.jose.jws.JwsAlgorithms;
@@ -37,6 +38,7 @@ public class SecurityConfiguration
 
     @Value("${jwt.auth.secret}")
     private String authSecret;
+    
     @Autowired
     private UserDetailsService userDetailsService;
     
@@ -60,10 +62,16 @@ public class SecurityConfiguration
     protected void configure(HttpSecurity http) throws Exception {
     	
         super.configure(http); 
+        
+        http.sessionManagement()
+        .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
 
         setLoginView(http, LoginView.class); 
         
-        setStatelessAuthentication(http, new SecretKeySpec(Base64.getDecoder().decode(authSecret), JwsAlgorithms.HS256), "com.csn.carSharingNow");
+        setStatelessAuthentication(http, 
+        		new SecretKeySpec(Base64.getDecoder().decode(authSecret), 
+        				JwsAlgorithms.HS256), "com.csn.carSharingNow",3600);
         
         http.csrf().disable();
     }
