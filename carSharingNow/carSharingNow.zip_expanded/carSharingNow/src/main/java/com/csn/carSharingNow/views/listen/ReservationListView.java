@@ -83,8 +83,10 @@ public class ReservationListView extends VerticalLayout implements AfterNavigati
     private void configureGrid() {
         grid.addClassNames("reservation-grid");
         grid.setSizeFull();
-        grid.setColumns("carName","reservationStart", "reservationEnd");       
+        grid.setColumns("carName","reservationStart", "reservationEnd");    
+        grid.addColumn("car.carStationEnum").setHeader("Station");
         grid.getColumns().forEach(col -> col.setAutoWidth(true)); 
+        
         grid.setSelectionMode(Grid.SelectionMode.SINGLE);
     }
     
